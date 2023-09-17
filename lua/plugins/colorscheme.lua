@@ -43,6 +43,14 @@ return {
     },
   },
   {
+    "AlphaTechnolog/pywal.nvim",
+    lazy = false,
+    name = "pywal",
+    opt = function()
+      require("pywal").setup()
+    end,
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "catppuccin",
