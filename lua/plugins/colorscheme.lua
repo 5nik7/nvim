@@ -30,7 +30,7 @@ return {
             information = { "undercurl" },
           },
         },
-        navic = { enabled = true },
+        navic = { enabled = true, custom_bg = "lualine" },
         neotest = true,
         noice = true,
         notify = true,
@@ -41,14 +41,6 @@ return {
         which_key = true,
       },
     },
-  },
-  {
-    "AlphaTechnolog/pywal.nvim",
-    lazy = false,
-    name = "pywal",
-    opt = function()
-      require("pywal").setup()
-    end,
   },
   {
     "LazyVim/LazyVim",

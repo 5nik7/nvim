@@ -31,9 +31,9 @@ return {
         button.opts.hl = "AlphaButtons"
         button.opts.hl_shortcut = "AlphaShortcut"
       end
-      dashboard.section.header.opts.hl = "AlphaHeader"
+      dashboard.section.header.opts.hl = "@error"
       dashboard.section.buttons.opts.hl = "AlphaButtons"
-      dashboard.section.footer.opts.hl = "AlphaFooter"
+      dashboard.section.footer.opts.hl = "@comment"
       dashboard.opts.layout[1].val = 8
       return dashboard
     end,
