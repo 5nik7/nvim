@@ -18,7 +18,7 @@ return {
    ║  ║\  ║║  ╚══╗║  ╚═╝  ║████╔╝ ██║██║║  ║  ║  ║
    ╚══╝╚══╝╚═════╝╚═══════╝╚═══╝  ╚═╝╚═╝╚══╝  ╚══╝
 ]]
-      local pad = string.rep(" ", 22)
+      local pad = string.rep(" ", 20)
       local new_section = function(name, action, section)
         return { name = name, action = action, section = pad .. section }
       end

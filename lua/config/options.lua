@@ -1,6 +1,6 @@
 -- This file is automatically loaded by plugins.core
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = " "
 
 -- Enable LazyVim auto format
 vim.g.autoformat = true
@@ -44,14 +44,14 @@ opt.shiftwidth = 2 -- Size of an indent
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.showmode = false -- Dont show mode since we have a statusline
 opt.sidescrolloff = 8 -- Columns of context
-opt.signcolumn = "auto:1-2" -- Always show the signcolumn, otherwise it would shift the text each time
+opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
 opt.smartcase = true -- Don't ignore case with capitals
 opt.smartindent = true -- Insert indents automatically
-opt.smoothscroll = true
 opt.spelllang = { "en" }
 opt.splitbelow = true -- Put new windows below current
 opt.splitkeep = "screen"
 opt.splitright = true -- Put new windows right of current
+opt.swapfile = false
 opt.tabstop = 2 -- Number of spaces tabs count for
 opt.termguicolors = true -- True color support
 opt.timeoutlen = 300
@@ -71,6 +71,15 @@ opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
+opt.guicursor = {
+  "a:block",
+  "n:Cursor",
+  "o-c:iCursor",
+  "v:vCursor",
+  "i-ci-sm:ver30-iCursor",
+  "r-cr:hor20-rCursor",
+  "a:blinkon0",
+}
 
 if vim.fn.has("nvim-0.10") == 1 then
   opt.smoothscroll = true
@@ -84,7 +93,6 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
 end
 
--- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
 if vim.fn.has("nvim-0.10") == 1 then
   vim.opt.foldmethod = "expr"
   vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
