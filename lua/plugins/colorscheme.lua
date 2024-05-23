@@ -124,7 +124,7 @@
           -- telescope 99acec
           TelescopePromptTitle = { fg = colors.overlay2, bg = colors.overlay0, style = { "bold" } },
           TelescopePromptCounter = { fg = colors.red, style = { "bold" } },
-          TelescopePromptBorder = { fg = colors.overlay0,bg = colors.mantle },
+          TelescopePromptBorder = { fg = colors.overlay0 },
           -- telescope results
           TelescopeResultsTitle = { link = "TelescopePromptTitle" },
           TelescopeResultsBorder = { link = "TelescopePromptBorder" },
