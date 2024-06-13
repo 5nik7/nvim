@@ -1,21 +1,14 @@
-﻿return {
-  "nvim-telescope/telescope.nvim", tag = "0.1.6",
--- or                              , branch = '0.1.x',
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    config = function()
-      require("telescope").setup{
-        defaults = {
-          mappings = {
-            i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
-            },
-          },
-        },
-      }
-      require('telescope').load_extension 'fzf'
-    end,
+return {
+  {
+    "nvim-telescope/telescope.nvim",
+    keys = {
+      -- add a keymap to browse plugin files
+      -- stylua: ignore
+      {
+        "<leader>fp",
+        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
+        desc = "Find Plugin File",
+      },
     },
-  }
+  },
+}
