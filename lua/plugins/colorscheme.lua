@@ -33,6 +33,16 @@ return {
         colors.yellow = drip.yellow
         colors.red = drip.red
       end,
+      on_highlights = function(hl, c)
+        hl.DashboardHeader = {
+          -- bg = c.bg_dark,
+          fg = c.blue,
+        }
+        hl.DashboardFooter = {
+          -- bg = c.bg_dark,
+          fg = c.comment,
+        }
+      end,
     },
   },
   {
