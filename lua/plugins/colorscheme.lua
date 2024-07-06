@@ -32,6 +32,7 @@ return {
         colors.orange = drip.orange
         colors.yellow = drip.yellow
         colors.red = drip.red
+        colors.green = drip.green
       end,
       on_highlights = function(hl, c)
         hl.DashboardHeader = {
