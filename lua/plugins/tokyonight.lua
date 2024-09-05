@@ -61,6 +61,9 @@ return {
       hl.lualine_c_normal = {
         bg = c.bg_dark,
       }
+      hl.current_day = {
+        fg = drip.red,
+      }
     end,
   },
 }
