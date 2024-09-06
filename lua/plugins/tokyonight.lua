@@ -53,13 +53,16 @@ return {
         fg = c.blue,
       }
       hl.DashboardFooter = {
-        fg = drip.comment,
+        fg = drip.void3,
       }
       hl.DashboardKey = {
-        fg = c.orange,
+        fg = c.yellow,
       }
       hl.DashboardDesc = {
         fg = c.cyan,
+      }
+      hl.DashboardIcon = {
+        fg = drip.void,
       }
     end,
   },

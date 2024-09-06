@@ -43,13 +43,13 @@ M.drip = {
   bg_dark = "#101f3c",
   bg_highlight = "#233250",
   terminal_black = "#2f4167",
-  fg_sidebar = "#F5FCFF",
+  fg_sidebar = "#f1faff",
   bg_sidebar = "#142444",
   bg_float = "#142444",
   fg_gutter = "#334775",
   comment = "#49608d",
-  fg = "#F5FCFF",
-  fg_dark = "#E0E3FF",
+  fg = "#e5f0ff",
+  fg_dark = "#f1f1e6",
   border = "#132243",
   black = "#132243",
   blue = "#4785ff",
@@ -66,6 +66,10 @@ M.drip = {
   fade5 = "#011546",
   fade6 = "#0b2342",
   footer = "#6184b0",
+  starlight = "#94ddf0",
+  void3 = "#015a9c",
+  void2 = "#02b7ff",
+  void = "#00d2ff",
 }
 
 return M
