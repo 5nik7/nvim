@@ -40,7 +40,7 @@ local M = {}
 
 M.drip = {
   bg = "#142444",
-  bg_dark = "#141c36",
+  bg_dark = "#101f3c",
   bg_highlight = "#233250",
   terminal_black = "#2f4167",
   fg_sidebar = "#F5FCFF",
@@ -50,6 +50,8 @@ M.drip = {
   comment = "#49608d",
   fg = "#F5FCFF",
   fg_dark = "#E0E3FF",
+  border = "#132243",
+  black = "#132243",
   blue = "#4785ff",
   orange = "#ffae90",
   yellow = "#ffca8d",

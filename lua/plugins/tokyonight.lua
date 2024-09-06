@@ -6,7 +6,7 @@ local drip = require("util.dream").drip
 return {
   "folke/tokyonight.nvim",
   opts = {
-    style = "night",
+    style = "storm",
     transparent = true,
     terminal_colors = true,
     styles = {
@@ -18,6 +18,7 @@ return {
     on_colors = function(colors)
       colors.bg = drip.bg
       colors.bg_dark = drip.bg_dark
+      colors.bg_statusline = drip.bg_dark
       colors.bg_highlight = drip.bg_highlight
       colors.terminal_black = drip.terminal_black
       colors.fg = drip.fg
@@ -26,6 +27,8 @@ return {
       colors.fg_float = drip.fg_float
       colors.comment = drip.comment
       colors.fg_gutter = drip.fg_gutter
+      colors.border = drip.border
+      colors.black = drip.black
       colors.blue = drip.blue
       colors.orange = drip.orange
       colors.red = drip.red
@@ -57,12 +60,6 @@ return {
       }
       hl.DashboardDesc = {
         fg = c.cyan,
-      }
-      hl.lualine_c_normal = {
-        bg = c.bg_dark,
-      }
-      hl.current_day = {
-        fg = drip.red,
       }
     end,
   },
