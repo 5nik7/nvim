@@ -56,7 +56,7 @@ return {
         fg = drip.void3,
       }
       hl.DashboardKey = {
-        fg = c.yellow,
+        fg = c.orange,
       }
       hl.DashboardDesc = {
         fg = c.cyan,
