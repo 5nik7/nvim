@@ -8,7 +8,7 @@ return {
   opts = {
     style = "storm",
     transparent = true,
-    terminal_colors = true,
+    terminal_colors = false,
     styles = {
       comments = { italic = true },
       keywords = { italic = true },
@@ -50,10 +50,10 @@ return {
         fg = drip.fg_dark,
       }
       hl.DashboardHeader = {
-        fg = c.blue,
+        fg = drip.blue2,
       }
       hl.DashboardFooter = {
-        fg = drip.void3,
+        fg = drip.footer,
       }
       hl.DashboardKey = {
         fg = c.orange,
