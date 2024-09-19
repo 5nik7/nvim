@@ -66,7 +66,7 @@ return {
     "nvimdev/dashboard-nvim",
     opts = {
       config = {
-        header = vim.split(string.rep("\n", 16) .. logo.block .. "\n", "\n"),
+        header = vim.split(string.rep("\n", 12) .. logo.block .. "\n", "\n"),
       },
     },
   },
