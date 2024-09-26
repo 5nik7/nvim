@@ -30,7 +30,8 @@ return {
       colors.orange = drip.orange
       colors.red = drip.red
       colors.purple = drip.purple
-      colors.green1 = drip.green
+      colors.green = drip.green
+      colors.green1 = drip.green1
       colors.cyan = drip.cyan
     end,
     on_highlights = function(hl, c)
