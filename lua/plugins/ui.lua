@@ -3,7 +3,7 @@ return {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
-        width = 40,
+        width = 45,
         preset = {
           -- Used by the `header` section
           header = [[
