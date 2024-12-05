@@ -1,4 +1,4 @@
 {
-  "Lua.diagnostics.globals": ["vim", "Wezterm", "LazyVim"],
+  "Lua.diagnostics.globals": ["vim", "Wezterm", "LazyVim", "M"],
   "Lua.diagnostics.disable": ["unused-local"]
 }
