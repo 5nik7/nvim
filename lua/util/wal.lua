@@ -1,0 +1,1 @@
+C:/Users/njen/.cache/wal/colors.lua
