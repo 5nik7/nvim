@@ -59,27 +59,27 @@ return {
       -- hl.NeoTreeFilename = {
       --   fg = drip.fg_dark,
       -- }
-      -- hl.SnacksDashboardHeader = {
-      --   fg = drip.blue2,
-      -- }
-      -- hl.SnacksDashboardFooter = {
-      --   fg = drip.footer,
-      -- }
-      -- hl.SnacksDashboardSpecial = {
-      --   fg = drip.gray,
-      -- }
-      -- hl.SnacksDashboardKey = {
-      --   fg = drip.orange2,
-      -- }
-      -- hl.SnacksDashboardDesc = {
-      --   fg = drip.cyan,
-      -- }
-      -- hl.SnacksDashboardIcon = {
-      --   fg = drip.void,
-      -- }
-      -- hl.MiniIndentscopeSymbol = {
-      --   fg = drip.gray,
-      -- }
+      hl.SnacksDashboardHeader = {
+        fg = c.blue,
+      }
+      hl.SnacksDashboardFooter = {
+        fg = c.gray,
+      }
+      hl.SnacksDashboardSpecial = {
+        fg = c.fg_dark,
+      }
+      hl.SnacksDashboardKey = {
+        fg = c.yellow,
+      }
+      hl.SnacksDashboardDesc = {
+        fg = c.fg,
+      }
+      hl.SnacksDashboardIcon = {
+        fg = c.gray,
+      }
+      hl.MiniIndentscopeSymbol = {
+        fg = c.fg_dark,
+      }
     end,
   },
 }
