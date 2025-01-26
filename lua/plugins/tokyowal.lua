@@ -30,35 +30,40 @@ return {
       colors.black = wal.background
       colors.blue = wal.color4
       colors.blue2 = wal.color12
+      colors.blue3 = util.darken(wal.color4, 0.4)
       colors.orange = wal.color3
       colors.yellow = wal.color11
       colors.red = wal.color1
       colors.red1 = wal.color1
       colors.magenta = wal.color13
       colors.purple = wal.color5
+      colors.purple2 = util.darken(wal.color5, 0.6)
       colors.green = wal.color10
       colors.green1 = wal.color2
-      colors.green2 = util.darken(wal.color2, 0.5)
+      colors.green2 = util.darken(wal.color2, 0.2)
       colors.teal = util.darken(wal.color14, 0.5)
       colors.cyan = wal.color6
       colors.gray = wal.color8
     end,
     on_highlights = function(hl, c)
-      -- hl.TelescopeBorder = {
-      --   fg = drip.fade2,
-      -- }
-      -- hl.CursorLineNr = {
-      --   fg = drip.fade1,
-      -- }
+      hl.FzfLuaBorder = {
+        fg = c.gray,
+      }
+      hl.FloatBorder = {
+        fg = c.gray,
+      }
+      hl.CursorLineNr = {
+        fg = c.purple2,
+      }
       hl.NeoTreeDotFile = {
         fg = c.gray,
       }
       hl.NeoTreeMessage = {
         fg = wal.color0,
       }
-      -- hl.NeoTreeFilename = {
-      --   fg = drip.fg_dark,
-      -- }
+      hl.NeoTreeDirectoryIcon = {
+        fg = c.blue3,
+      }
       hl.SnacksDashboardHeader = {
         fg = c.blue,
       }
@@ -77,8 +82,8 @@ return {
       hl.SnacksDashboardIcon = {
         fg = c.gray,
       }
-      hl.MiniIndentscopeSymbol = {
-        fg = c.fg_dark,
+      hl.SnacksIndentScope = {
+        fg = c.green2,
       }
     end,
   },
