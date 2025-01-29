@@ -4,6 +4,7 @@
     "lazyvim.plugins.extras.ai.copilot-chat",
     "lazyvim.plugins.extras.lang.elixir",
     "lazyvim.plugins.extras.lang.git",
+    "lazyvim.plugins.extras.lang.go",
     "lazyvim.plugins.extras.lang.java",
     "lazyvim.plugins.extras.lang.json",
     "lazyvim.plugins.extras.lang.markdown",
@@ -14,6 +15,7 @@
     "lazyvim.plugins.extras.lang.toml",
     "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
+    "lazyvim.plugins.extras.lang.zig",
     "lazyvim.plugins.extras.util.mini-hipatterns"
   ],
   "news": {
