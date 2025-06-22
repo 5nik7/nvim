@@ -1,0 +1,11 @@
+.vscode/
+*.log
+/.repro
+/.tests
+/build
+/debug
+/doc/tags
+foo.*
+node_modules
+tt.*
+lazy-lock.json
