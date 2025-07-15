@@ -1,47 +1,55 @@
+local ui = require("util.ui")
+
 return {
   {
     "folke/snacks.nvim",
+    ---@type snacks.Config
     opts = {
       dashboard = {
-        width = 46,
+        width = 40,
         preset = {
           -- Used by the `header` section
---           header = [[
--- 888     88888888888888888888b     d888
--- 888     888  888    888  8888b   d8888
--- 888     888  888    888  88888b.d88888
--- Y88b   d88P  888    888  888Y88888P888
---  Y88b d88P   888    888  888 Y888P 888
---   Y88o88P    888    888  888  Y8P  888
---    Y888P     888    888  888   "   888
---     Y8P    88888888888888888       888]],
---           header = [[
--- ███    ██ ███████  ██████  ██    ██ ██ ███    ███
--- ████   ██ ██      ██    ██ ██    ██ ██ ████  ████
--- ██ ██  ██ █████   ██    ██ ██    ██ ██ ██ ████ ██
--- ██  ██ ██ ██      ██    ██  ██  ██  ██ ██  ██  ██
--- ██   ████ ███████  ██████    ████   ██ ██      ██]],
-
-          --           header = [[
-          -- ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
-          -- ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
-          -- ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
-          -- ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
-          -- ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
-          -- ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
-                    header = [[
-╔══╗╔══╗╔═════╗╔══════██╗   ██╗██╗██╗╔═══╗╔═══╗
-║  \║  ║║  ╔══╝║  ╔═╗ ██║   ██║██║██║║   \/   ║
-║   \  ║║  ╚══╗║  ║ ║ ██║   ██║██║██║║  \  /  ║
-║  \   ║║  ╔══╝║  ║ ║ ╚██╗ ██╔╝██║██║║  ║\/║  ║
-║  ║\  ║║  ╚══╗║  ╚═╝  ║████╔╝ ██║██║║  ║  ║  ║
-╚══╝╚══╝╚═════╝╚═══════╝╚═══╝  ╚═╝╚═╝╚══╝  ╚══╝]],
+          header = ui.banners.neovim.medium.block,
         },
         sections = {
           { section = "header", padding = 2 },
-          -- { section = "keys", gap = 1, padding = 2 },
           { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
           { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+          -- { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+          {
+            icon = " ",
+            title = "Git Status",
+            section = "terminal",
+            enabled = function()
+              return Snacks.git.get_root() ~= nil
+            end,
+            cmd = "git status --short --branch --renames",
+            height = 3,
+            padding = 1,
+            ttl = 3 * 60,
+            indent = 3,
+          },
+          -- function()
+          --   local in_git = Snacks.git.get_root() ~= nil
+          --   local cmds = {
+          --     {
+          --       icon = " ",
+          --       title = "Git Status",
+          --       cmd = "git --no-pager diff --stat -B -M -C",
+          --       height = 10,
+          --     },
+          --   }
+          --   return vim.tbl_map(function(cmd)
+          --     return vim.tbl_extend("force", {
+          --       section = "terminal",
+          --       enabled = in_git,
+          --       padding = 1,
+          --       ttl = 5 * 60,
+          --       indent = 3,
+          --     }, cmd)
+          --   end, cmds)
+          -- end,
+          -- { sections = "" },
           { section = "startup" },
         },
       },
