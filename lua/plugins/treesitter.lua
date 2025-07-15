@@ -10,7 +10,6 @@ return {
         "go",
         "graphql",
         "http",
-        "just",
         "meson",
         "ninja",
         "php",
