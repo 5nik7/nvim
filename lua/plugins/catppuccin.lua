@@ -1,93 +1,140 @@
-local colors = require("catppuccin.palettes").get_palette("mocha")
+local colors = require("catppuccin.palettes").get_palette()
+local latte = require("catppuccin.palettes").get_palette("latte")
+local frappe = require("catppuccin.palettes").get_palette("frappe")
+local macchiato = require("catppuccin.palettes").get_palette("macchiato")
+local mocha = require("catppuccin.palettes").get_palette("mocha")
 
 return {
   {
     "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      flavour = "mocha",
-      transparent_background = true,
-      term_colcrs = false,
-      dim_inactive = {
-        enabled = false,
-        shade = "dark",
-        percentage = 0.01,
-      },
-      nc_italic = false,
-      no_bold = false,
-      no_underline = false,
-      styles = {
-        comments = {},
-        conditionals = { "italic" },
-        loops = {},
-        functions = {},
-        keywords = {},
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = {},
-        properties = {},
-        types = {},
-        operators = {},
-      },
-      color_overrides = {},
-      custom_highlights = {
-        -- Tokebns
-        Comment = {
-          fg = colors.surface1,
-          -- bg = colors.base,
+    optional = true,
+    opts = function()
+      local bufferline = require("catppuccin.groups.integrations.bufferline")
+      bufferline.get = bufferline.get or bufferline.get_theme
+
+      local opts = {
+        flavour = "mocha",
+        transparent_background = true,
+        term_colors = false,
+        integrations = {
+          aerial = true,
+          alpha = true,
+          cmp = true,
+          dashboard = true,
+          flash = true,
+          fzf = true,
+          grug_far = true,
+          gitsigns = true,
+          headlines = true,
+          illuminate = true,
+          indent_blankline = { enabled = true },
+          leap = true,
+          lsp_trouble = true,
+          mason = true,
+          markdown = true,
+          mini = true,
+          native_lsp = {
+            enabled = true,
+            underlines = {
+              errors = { "undercurl" },
+              hints = { "undercurl" },
+              warnings = { "undercurl" },
+              information = { "undercurl" },
+            },
+          },
+          navic = { enabled = true, custom_bg = "lualine" },
+          neotest = true,
+          neotree = true,
+          noice = true,
+          notify = true,
+          semantic_tokens = true,
+          snacks = true,
+          telescope = true,
+          treesitter = true,
+          treesitter_context = true,
+          which_key = true,
         },
-        SnacksDashboardHeader = {
-          fg = colors.mantle,
-          -- bg = colors.mantle,
+        custom_highlights = {
+          Comment = {
+            fg = colors.surface2,
+          },
+          CursorLine = {
+            bg = macchiato.base,
+          },
+          illuminatedWord = {
+            bg = macchiato.surface0,
+          },
+          illuminatedCurWord = {
+            bg = macchiato.surface0,
+          },
+          SnacksDashboardHeader = {
+            fg = macchiato.base,
+          },
+          SnacksDashboardIcon = {
+            fg = colors.surface1,
+          },
+          SnacksDashboardKey = {
+            fg = colors.peach,
+          },
+          SnacksDashboardTitle = {
+            fg = colors.blue,
+          },
+          SnacksDashboardDir = {
+            fg = colors.surface2,
+          },
+          SnacksDashboardFile = {
+            fg = colors.text,
+          },
+          SnacksDashboardDesc = {
+            fg = colors.text,
+          },
+          SnacksDashboardFooter = {
+            fg = macchiato.surface1,
+          },
+          SnacksDashboardSpecial = {
+            fg = macchiato.overlay1,
+          },
+          SnacksIndentScope = {
+            fg = macchiato.surface2,
+          },
+          SnacksIndentChunk = {
+            fg = macchiato.surface2,
+          },
+          LineNr = {
+            fg = colors.surface1,
+          },
+          CursorLineNr = {
+            fg = colors.lavender,
+          },
+          DiagnosticVirtualTextError = {
+            bg = macchiato.crust,
+            fg = colors.red,
+          },
+          DiagnosticVirtualTextWarn = {
+            bg = macchiato.crust,
+            fg = colors.yellow,
+          },
+          DiagnosticVirtualTextInfo = {
+            bg = macchiato.crust,
+            fg = colors.blue,
+          },
+          DiagnosticVirtualTextHint = {
+            bg = macchiato.crust,
+            fg = latte.teal,
+          },
+          GitSignsAdd = {
+            fg = colors.green,
+          },
+          GitSignsChange = {
+            fg = colors.yellow,
+          },
+          GitSignsDelete = {
+            fg = colors.red,
+          },
         },
-        SnacksDashboardIcon = {
-          fg = colors.pink,
-        },
-        SnacksDashboardKey = {
-          fg = colors.flamingo,
-        },
-        SnacksDashboardTitle = {
-          fg = colors.mauve,
-        },
-        SnacksDashboardDir = {
-          fg = colors.surface2,
-          -- bg = colors.mantle,
-        },
-        SnacksDashboardFile = {
-          fg = colors.text,
-          -- bg = colors.mantle,
-        },
-        SnacksDashboardDesc = {
-          fg = colors.lavender,
-          -- bg = colors.mantle,
-        },
-        SnacksDashboardFooter = {
-          fg = colors.surface0,
-        },
-        SnacksDashboardSpecial = {
-          fg = colors.surface1,
-        },
-        SnacksIndentScope = {
-          fg = colors.surface2,
-        },
-        SnacksIndentChunk = {
-          fg = colors.surface2,
-        },
-      },
-      default_integrations = true,
-      integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        treesitter = true,
-        notify = true,
-        mini = {
-          enabled = true,
-          indentscope_color = "",
-        },
-      },
-    },
+      }
+
+      return opts
+    end,
   },
 }

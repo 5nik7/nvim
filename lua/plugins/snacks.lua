@@ -32,7 +32,7 @@ return {
           },
         },
         scope = {
-          enabled = false,
+          enabled = true,
           priority = 200,
           char = "│",
           underline = false,
@@ -40,20 +40,23 @@ return {
           hl = "SnacksIndentScope",
         },
         chunk = {
-          enabled = true,
+          enabled = false,
           priority = 200,
           only_current = false,
           hl = "SnacksIndentChunk",
-          -- char = {
-          -- corner_top = "┌",
-          -- corner_bottom = "└",
-          -- corner_top = "╭",
-          -- corner_bottom = "╰",
-          -- horizontal = "─",
-          -- vertical = "│",
-          -- arrow = ">",
-          -- },
+          char = {
+            corner_top = "┌",
+            corner_bottom = "└",
+            -- corner_top = "╭",
+            -- corner_bottom = "╰",
+            horizontal = "─",
+            vertical = "│",
+            arrow = ">",
+          },
         },
+        filter = function(buf)
+          return vim.g.snacks_indent ~= false and vim.b[buf].snacks_indent ~= false and vim.bo[buf].buftype == ""
+        end,
       },
       input = { enabled = true },
       notifier = {
@@ -71,7 +74,7 @@ return {
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { enabled = true },
+      statuscolumn = { folds = { open = false } },
       words = { enabled = true },
     },
   },

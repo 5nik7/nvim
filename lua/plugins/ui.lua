@@ -1,4 +1,9 @@
 local ui = require("util.ui")
+local colors = require("catppuccin.palettes").get_palette()
+-- local lazy_stats = require("lazy.stats").stats()
+-- local ms = (math.floor(M.lazy_stats.startuptime * 100 + 0.5) / 100)
+
+-- local stats = require("lazy.stats").stats()
 
 return {
   {
@@ -8,16 +13,28 @@ return {
       dashboard = {
         width = 40,
         preset = {
+          pick = function(cmd, opts)
+            return LazyVim.pick(cmd, opts)()
+          end,
           -- Used by the `header` section
           header = ui.banners.neovim.medium.block,
         },
         sections = {
-          { section = "header", padding = 2 },
-          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          -- { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+          { section = "header", padding = 1 },
           {
-            icon = " ",
+            section = "startup",
+            padding = 1,
+            icon = "", -- text = {
+            --   { "Loaded ", hl = "footer" },
+            --   { lazy_stats.loaded .. "/" .. lazy_stats.count, hl = "special" },
+            --   { " plugins in ", hl = "footer" },
+            --   { ms .. "ms", hl = "special" },
+            -- },
+          },
+          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+          { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
+          {
+            icon = " ",
             title = "Git Status",
             section = "terminal",
             enabled = function()
@@ -29,28 +46,14 @@ return {
             ttl = 3 * 60,
             indent = 3,
           },
-          -- function()
-          --   local in_git = Snacks.git.get_root() ~= nil
-          --   local cmds = {
-          --     {
-          --       icon = " ",
-          --       title = "Git Status",
-          --       cmd = "git --no-pager diff --stat -B -M -C",
-          --       height = 10,
-          --     },
-          --   }
-          --   return vim.tbl_map(function(cmd)
-          --     return vim.tbl_extend("force", {
-          --       section = "terminal",
-          --       enabled = in_git,
-          --       padding = 1,
-          --       ttl = 5 * 60,
-          --       indent = 3,
-          --     }, cmd)
-          --   end, cmds)
-          -- end,
-          -- { sections = "" },
-          { section = "startup" },
+          -- {
+          --   section = "terminal",
+          --   cmd = "btry",
+          --   height = 1,
+          --   padding = 1,
+          --   ttl = 3 * 60,
+          --   indent = 3,
+          -- },
         },
       },
     },
