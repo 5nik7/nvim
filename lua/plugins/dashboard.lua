@@ -6,7 +6,7 @@ return {
     ---@type snacks.Config
     opts = {
       dashboard = {
-        width = 29,
+        width = 28,
         rows = nil,
         col = nil,
         pane_gap = 0,
@@ -18,7 +18,7 @@ return {
           file = ui.format_dashboard_file,
         },
         sections = {
-          { section = "header", padding = 1 },
+          require("util.dashboard_gradient").section,
           { section = "keys", indent = 1, padding = 1 },
           {
             title = "Recent",

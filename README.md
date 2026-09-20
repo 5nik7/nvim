@@ -171,6 +171,36 @@ Rust debugging uses Mason's CodeLLDB installation only when its executable and
 platform-specific liblldb library both exist. A custom native adapter can be supplied
 through `vim.g.rustaceanvim`; absent adapters do not block Rust editing.
 
+## Codex inside Neovim
+
+This config runs [Codex CLI](https://developers.openai.com/codex/cli/) in a
+Snacks floating terminal. It uses the existing Snacks plugin and your Codex login,
+model, and permission settings.
+
+- **Termux:** uses [5nik7/codex-termux](https://github.com/5nik7/codex-termux),
+  invoking `codex-termux run` or `codex-termux run resume`. The wrapper must be on
+  Neovim's PATH; there is no fallback to the plain `codex` executable. Sign in with
+  `codex-termux login` in your regular terminal if needed. The wrapper's runtime
+  selection, proxy, and configuration apply normally.
+- **Other platforms:** uses `codex` or `codex resume` from PATH. Sign in with
+  `codex login` if needed.
+
+| Command | Normal-mode shortcut | Action |
+| --- | --- | --- |
+| `:Codex` | `<Space>ac` | Toggle Codex in LazyVim's detected project root |
+| `:CodexResume` | `<Space>ar` | Open the project's saved-session picker, or toggle its running terminal |
+
+Type directly into the terminal to talk to Codex. To return to Neovim, press
+`Ctrl-\` then `Ctrl-n`; press `q` in terminal normal mode to hide the window.
+Opening it again keeps the running conversation. Escape passes through to Codex.
+The normal and resume commands use separate terminals, each retained per project
+until its process exits or Neovim closes. Use Codex's `/quit` to end a session.
+
+Save buffers before asking Codex to work on them: this integration reads files
+from disk and does not automatically send unsaved buffers or visual selections.
+Use `:checktime` to refresh files changed by Codex (modified buffers are protected
+by Neovim's normal reload checks), then review the changes with Git.
+
 ## Diagnostics and updates
 
 `:checkhealth config` reports platform, paths, shell, clipboard provider selection,
