@@ -1,0 +1,45 @@
+name: Neovim portability
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install StyLua
+        run: cargo install stylua --locked
+      - run: stylua --check init.lua lua/ tests/
+
+  neovim:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        neovim: [v0.11.2, stable]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.neovim }}
+      - name: Fresh bootstrap and integration checks
+        run: python scripts/check.py
+      - name: Retain logs and resolved plugin versions
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: neovim-${{ matrix.os }}-${{ matrix.neovim }}
+          path: .tests/results/
+          include-hidden-files: true

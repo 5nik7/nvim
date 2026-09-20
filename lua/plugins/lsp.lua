@@ -4,15 +4,6 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        lua_ls = {
-          mason = false,
-        },
-        ruff = {
-          mason = false,
-        },
-        basedpyright = {
-          mason = false,
-        },
         bashls = {
           filetypes = { "sh", "zsh" },
         },
@@ -23,7 +14,6 @@ return {
     "mfussenegger/nvim-lint",
     opts = {
       linters_by_ft = {
-        -- lua = { "selene", "luacheck" },
         lua = { "luacheck" },
       },
       linters = {

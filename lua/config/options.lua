@@ -1,13 +1,8 @@
 vim.opt.wrap = true
-vim.opt.smartindent = true -- Insert indents automatically
+vim.opt.smartindent = true
 vim.opt.cmdheight = 0
 
 vim.opt.mousescroll = "ver:1,hor:1"
-
--- vim.g.loaded_python3_provider = 0
--- vim.g.loaded_perl_provider = 0
--- vim.g.loaded_ruby_provider = 0
--- vim.g.loaded_node_provider = 0
 
 vim.g.lazyvim_python_ruff = "ruff"
 vim.g.lazyvim_python_lsp = "basedpyright"
@@ -18,23 +13,15 @@ vim.g.markdown_recommended_style = 0
 
 vim.g.shfmt_opt = "-ci"
 
-if vim.fn.has("win32") == 1 then
-  LazyVim.terminal.setup("pwsh")
+local platform = require("util.platform")
+local shell = platform.shell()
+if shell then
+  LazyVim.terminal.setup(shell)
+  if shell == "powershell" then
+    -- Windows PowerShell 5.1 has no $PSStyle (used by some LazyVim revisions).
+    vim.o.shellcmdflag = vim.o.shellcmdflag:gsub("%$PSStyle%.OutputRendering='plaintext';", "")
+  end
 end
-
-vim.g.clipboard = "termux"
-
-if vim.fn.has("wsl") == 1 then
-  vim.g.clipboard = {
-    name = "win32yank-wsl",
-    copy = {
-      ["+"] = "win32yank.exe -i --crlf",
-      ["*"] = "win32yank.exe -i --crlf",
-    },
-    paste = {
-      ["+"] = "win32yank.exe -o --lf",
-      ["*"] = "win32yank.exe -o --lf",
-    },
-    cache_enabled = 0,
-  }
+if vim.g.clipboard == nil then
+  vim.g.clipboard = platform.clipboard()
 end
