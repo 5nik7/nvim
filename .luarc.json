@@ -5,15 +5,12 @@
   },
   "workspace": {
     "checkThirdParty": false,
-    "library": [
-      "$VIMRUNTIME",
-      "${3rd}/luv/library"
-    ],
     "maxPreload": 2000,
     "preloadFileSize": 1000
   },
   "diagnostics": {
-    "globals": ["vim", "Snacks"]
+    "globals": ["vim", "Snacks"],
+    "disable": ["undefined-doc-name"]
   },
   "telemetry": {
     "enable": false

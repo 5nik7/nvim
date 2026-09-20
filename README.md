@@ -203,6 +203,12 @@ by Neovim's normal reload checks), then review the changes with Git.
 
 ## Diagnostics and updates
 
+LuaLS suppresses `undefined-doc-name` warnings for this config through `.luarc.json`.
+LazyDev loads Snacks type definitions for both `Snacks` references and lowercase
+`snacks` annotations; other Lua diagnostics remain enabled.
+Keep `workspace.library` out of `.luarc.json`: a fixed list there overrides
+LazyDev's runtime and plugin libraries, preventing plugin types from resolving.
+
 `:checkhealth config` reports platform, paths, shell, clipboard provider selection,
 parser prerequisites, and tool availability without installing tools or reading or
 writing clipboard contents. Warnings describe optional capabilities, not a requirement
