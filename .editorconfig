@@ -34,13 +34,11 @@ trim_trailing_whitespace = false
 end_of_line = crlf
 indent_size = 2
 
-# shell scripts
-[*.{sh,bash}]
-end_of_line        = lf
-indent_style       = space
-indent_size        = 2
-simplify           = true
-binary_next_line   = false
-switch_case_indent = true
-space_redirects    = true
-function_next_line = false
+# Shell script files
+[*.sh]
+end_of_line = lf
+indent_size = 2
+
+[*.{lua,ts,js}]
+indent_size = 2
+indent_style = space
