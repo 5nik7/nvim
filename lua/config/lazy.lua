@@ -1,9 +1,9 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   if vim.fn.executable("git") ~= 1 then
-    vim.api.nvim_err_writeln(
-      "Cannot install lazy.nvim: install Git and make it available on PATH, then restart Neovim."
-    )
+    vim.api.nvim_echo({
+      { "Cannot install lazy.nvim: install Git and make it available on PATH, then restart Neovim." },
+    }, true, { err = true })
     vim.cmd("cquit 1")
   end
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"

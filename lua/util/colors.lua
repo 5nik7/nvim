@@ -18,10 +18,15 @@ end
 function M.update(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   local params = { textDocument = vim.lsp.util.make_text_document_params(buf) }
-  vim.lsp.buf_request(buf, "textDocument/documentColor", params, function(err, colors)
-    if err then
+  vim.lsp.buf_request(buf, "textDocument/documentColor", params, function(err, colors, ctx)
+    if err or not colors then
       return
     end
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    if not client then
+      return
+    end
+    local offset_encoding = client.offset_encoding
     for _, c in ipairs(colors) do
       local color = c.color
       color.red = math.floor(color.red * 255 + 0.5)
@@ -29,7 +34,6 @@ function M.update(buf)
       color.blue = math.floor(color.blue * 255 + 0.5)
       local hex = string.format("#%02x%02x%02x", color.red, color.green, color.blue)
 
-      local offset_encoding = vim.lsp.util._get_offset_encoding(buf)
       local start_row = c.range.start.line
       local start_col = vim.lsp.util._get_line_byte_from_position(buf, c.range.start, offset_encoding)
       local end_row = c.range["end"].line
