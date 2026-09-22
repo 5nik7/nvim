@@ -31,6 +31,10 @@ registries. Once installed, ordinary editing does not require a fresh bootstrap.
   Hererocks. Git dependencies provide the enabled plugins' ordinary functionality.
 - The disabled Obsidian integration stays disabled. The configured palette and
   dashboard do not require pywal output to exist.
+- The `:` command line uses Noice's full-width bottom layout on Termux. Other
+  platforms use a 60-column popup and completion menu; below 64 terminal columns
+  (including borders and padding), they use 80% of the terminal width. The layout
+  updates when the terminal is resized. Configure this in `lua/plugins/noice.lua`.
 
 ## Install as the default config
 

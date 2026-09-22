@@ -3,10 +3,10 @@ local uv = vim.uv or vim.loop
 local states = {}
 
 -- Durations are in seconds; the palette is interpolated at 15 frames per second.
-local cycle_duration = 6
+local cycle_duration = 5
 local frame_interval = math.floor(1000 / 15)
 -- A full palette spans three header diagonals. Increase this for wider color bands.
-local gradient_spread = 9
+local gradient_spread = 7
 -- Terminal cells are roughly twice as tall as they are wide.
 local row_height = 2
 
