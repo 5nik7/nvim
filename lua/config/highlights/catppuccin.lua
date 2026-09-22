@@ -8,7 +8,14 @@ local accents = {
 ---@return table<string, table>
 return function(colors)
   -- Keep the softer Macchiato grays used by the original Mocha customization.
-  local macchiato = require("catppuccin.palettes").get_palette("macchiato")
+  local is_mocha = require("catppuccin").options.flavour == "mocha"
+  local macchiato = is_mocha and require("catppuccin.palettes").get_palette("macchiato") or colors
+  local accents = is_mocha and accents
+    or {
+      selected = colors.surface0,
+      visual = colors.surface1,
+      dashboard_icon = colors.mauve,
+    }
 
   return {
     -- Editor

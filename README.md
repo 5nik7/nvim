@@ -276,3 +276,18 @@ and the following results:
    explain what is missing, and JSONC comments must survive formatting.
 
 Actual validation results for this change are recorded in [docs/validation.md](docs/validation.md).
+
+## Shared dots theme
+
+When this configuration is used with the dots theme commands, `dots themes set
+catppuccin FLAVOR` selects Mocha, Macchiato, Frappé, or Latte for both Zsh and Neovim.
+Neovim reads generated JSON from `${XDG_STATE_HOME:-$HOME/.local/state}/dots/themes`
+at startup and when focus returns; it never launches dots to obtain colors.
+Use `:DotsThemeReload` when the terminal does not send focus events. Without shared
+state, the existing Mocha configuration remains the default.
+
+Mocha retains the existing custom highlights. Other flavors adapt the selected
+line, visual selection, comment, line-number, and dashboard icon colors to their
+own palette. Transparency, plugin integrations and dashboard animation settings
+are preserved. Invalid shared data retains the current colors with a warning.
+This adapter does not install plugins or overwrite configuration files.
