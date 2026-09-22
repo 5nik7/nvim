@@ -24,11 +24,9 @@ local function blend(a, b, amount)
 end
 
 local function load_colors(state)
-  local colors = require("catppuccin.palettes").get_palette()
-  local names = { "sapphire", "sky", "teal", "green", "yellow", "peach", "maroon", "pink", "mauve", "blue" }
   state.palette = {}
-  for _, name in ipairs(names) do
-    state.palette[#state.palette + 1] = rgb(colors[name])
+  for _, color in ipairs(require("util.dots_theme").gradient_colors()) do
+    state.palette[#state.palette + 1] = rgb(color)
   end
   state.base = vim.api.nvim_get_hl(0, { name = "SnacksDashboardHeader", link = false })
 end

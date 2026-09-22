@@ -280,14 +280,23 @@ Actual validation results for this change are recorded in [docs/validation.md](d
 ## Shared dots theme
 
 When this configuration is used with the dots theme commands, `dots themes set
-catppuccin FLAVOR` selects Mocha, Macchiato, Frappé, or Latte for both Zsh and Neovim.
+THEME FLAVOR` selects a shared palette for Zsh and Neovim. Families include Catppuccin
+(mocha/macchiato/frappe/latte), TokyoNight (night/storm/moon/day), Rosé Pine
+(main/moon/dawn), Kanagawa (wave/dragon/lotus), Gruvbox (dark/light), and pywal16
+(current). Use family identifiers `catppuccin`, `tokyonight`, `rose-pine`, `kanagawa`,
+`gruvbox`, or `pywal16`; omitted flavor uses that family's default. Install new
+plugin declarations through `:Lazy` if needed, then use `:DotsThemeReload`.
 Neovim reads generated JSON from `${XDG_STATE_HOME:-$HOME/.local/state}/dots/themes`
 at startup and when focus returns; it never launches dots to obtain colors.
 Use `:DotsThemeReload` when the terminal does not send focus events. Without shared
 state, the existing Mocha configuration remains the default.
 
-Mocha retains the existing custom highlights. Other flavors adapt the selected
+Mocha retains the existing custom highlights. Other Catppuccin flavors adapt the selected
 line, visual selection, comment, line-number, and dashboard icon colors to their
-own palette. Transparency, plugin integrations and dashboard animation settings
-are preserved. Invalid shared data retains the current colors with a warning.
-This adapter does not install plugins or overwrite configuration files.
+own palette. Other families use their native plugins with shared palette overrides;
+all families drive dashboard colors while preserving its animation settings. Pywal16
+uses validated published JSON through `dots-pywal16`, never a live Vimscript export.
+Regenerate your wal palette and run `dots themes set pywal16` to publish changes.
+Invalid shared data or unavailable plugins retain the current colors with a warning.
+The reader does not install plugins or overwrite configuration files; new plugins
+are lazy-loaded by the normal plugin manager when selected.

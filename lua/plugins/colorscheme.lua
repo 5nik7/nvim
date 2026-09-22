@@ -2,7 +2,9 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-nvim",
+      colorscheme = function()
+        require("util.dots_theme").startup()
+      end,
     },
   },
 }
