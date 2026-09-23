@@ -8,3 +8,6 @@ foo.*
 data
 lazy-lock.json
 __pycache__/
+
+# File catalog write locks
+.dots/*.lock

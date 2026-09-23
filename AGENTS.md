@@ -56,3 +56,12 @@ list validation, link relevant issues, and include screenshots for visible UI ch
 Preserve Termux, WSL, and Windows handling in `lua/config/options.lua`. Avoid adding
 machine-specific paths or credentials. `lazy-lock.json` is ignored and untracked;
 do not force-add it incidentally.
+
+## Dots Integration
+
+When nested at Dots `config/nvim`, maintain `.dots/files.json` as this repository's
+resource catalog. The shared theme reader consumes validated JSON via the stable
+XDG state `dots/current/theme` link, with legacy fallback. Keep generic imported
+themes data-only; do not execute downloaded Lua. Use the parent's isolated
+`tools/test_themes.py` and `tools/test_theme_workflow.py` for bridge changes rather
+than launching live LazyVim or installing plugins as a test.

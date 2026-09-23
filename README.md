@@ -300,3 +300,14 @@ Regenerate your wal palette and run `dots themes set pywal16` to publish changes
 Invalid shared data or unavailable plugins retain the current colors with a warning.
 The reader does not install plugins or overwrite configuration files; new plugins
 are lazy-loaded by the normal plugin manager when selected.
+
+## Shared Dots themes and file catalog
+
+When used through Dots at `config/nvim`, `.dots/files.json` owns this repository's
+resource metadata independently of the parent and Androidots. The theme bridge
+reads `~/.local/state/dots/current/theme/palette.json` (XDG_STATE_HOME respected),
+with legacy token fallback. `dots theme set ID` selects a published snapshot;
+focus or `:DotsThemeReload` applies it. Native theme plugins retain syntax options
+and transparency, with shared foreground/selection/accent roles. Other imported
+themes use built-in generic highlights; downloaded Lua is never executed. No
+plugins are installed by the bridge.

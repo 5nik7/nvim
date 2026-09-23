@@ -51,10 +51,18 @@ local function read(path, limit)
 end
 local function selection()
   local state = root()
-  if not state or not uv.fs_lstat(state .. "/current") then
+  if not state then
     return nil
   end
-  local token = read(state .. "/current", 128)
+  local active_path = state:gsub("/themes$", "/current/theme")
+  local active_link = uv.fs_readlink(active_path)
+  if not active_link and not uv.fs_lstat(state .. "/current") then
+    return nil
+  end
+  local token = active_link and (active_link:match("/(g%.[%w]+)$") or "") .. "\n" or read(state .. "/current", 128)
+  if active_link and active_link ~= state .. "/generations/" .. (token:gsub("\n$", "")) then
+    error("invalid active theme link")
+  end
   local generation = token and token:match("^(g%.[%w]+)\n$")
   if not generation then
     error("invalid selection")
@@ -67,8 +75,12 @@ local function selection()
   if
     type(data) ~= "table"
     or data.schema ~= 1
-    or not supported[data.theme]
-    or not supported[data.theme][data.flavor]
+    or type(data.theme) ~= "string"
+    or not data.theme:match("^[a-z][a-z0-9-]*$")
+    or type(data.flavor) ~= "string"
+    or not data.flavor:match("^[a-z][a-z0-9-]*$")
+    or (data.id ~= nil and (type(data.id) ~= "string" or not data.id:match("^[a-z][a-z0-9-]*$")))
+    or (data.adapter ~= "generic" and (not supported[data.theme] or not supported[data.theme][data.flavor]))
   then
     error("unsupported theme generation")
   end
@@ -123,6 +135,9 @@ local function checked_selection()
   end
 end
 local function background(data)
+  if data.mode == "light" or data.mode == "dark" then
+    return data.mode
+  end
   local light = { latte = true, day = true, dawn = true, lotus = true, light = true }
   if data.theme == "pywal16" then
     local color = data.roles.background
@@ -138,6 +153,16 @@ local function apply(selected)
   active = selected.data
   vim.o.background = background(active)
   action()
+  -- Shared semantic colors define app chrome even when a native plugin has its
+  -- own foreground or selection defaults. Keep its transparency preference.
+  local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+  normal.fg = active.roles.foreground
+  if normal.bg ~= nil then
+    normal.bg = active.roles.background
+  end
+  vim.api.nvim_set_hl(0, "Normal", normal)
+  vim.api.nvim_set_hl(0, "Visual", { bg = active.roles.selection })
+  vim.api.nvim_set_hl(0, "SnacksDashboardIcon", { fg = active.roles.accent })
   last_generation, failed_generation = selected.generation, nil
 end
 function M.reload(force)

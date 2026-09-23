@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "repository": "nvim",
+  "resources": [
+    {
+      "id": "nvim",
+      "source": ".",
+      "app": "nvim",
+      "category": "config",
+      "platforms": [
+        "termux",
+        "linux",
+        "wsl",
+        "windows"
+      ],
+      "target": "${CONFIG}/nvim",
+      "strategy": "directory-link",
+      "replaces": [
+        "androidots:nvim"
+      ]
+    }
+  ]
+}
