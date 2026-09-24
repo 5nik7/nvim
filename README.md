@@ -311,3 +311,8 @@ focus or `:DotsThemeReload` applies it. Native theme plugins retain syntax optio
 and transparency, with shared foreground/selection/accent roles. Other imported
 themes use built-in generic highlights; downloaded Lua is never executed. No
 plugins are installed by the bridge.
+
+The animated dashboard header cycles through the published theme's info, hint,
+warning, error, and accent colors for every family, including Catppuccin. It refreshes
+when the shared theme is applied. Without shared state, the gradient uses the current
+Neovim diagnostic and dashboard highlight colors.

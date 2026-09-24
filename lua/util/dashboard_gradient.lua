@@ -37,8 +37,8 @@ local function paint(state)
   local diagonal = math.max(1, state.width - 1 + (state.height - 1) * row_height)
   for _, cell in ipairs(state.cells) do
     local position = (cell.column - 1 + (state.height - cell.row) * row_height) / diagonal
-    -- Delay each cell along the bottom-left -> top-right diagonal. Starting at
-    -- peach avoids wrapping to yellow before the first color wave reaches it.
+    -- Delay each cell along the bottom-left -> top-right diagonal. Hold the first
+    -- theme color until the first color wave reaches the cell.
     -- Advancing time follows the palette order while the bands travel up/right.
     local offset = (math.max(0, phase - position / gradient_spread) % 1) * #state.palette
     local index = math.floor(offset)

@@ -233,19 +233,29 @@ function M.pywal_colors()
   return vim.tbl_extend("force", vim.deepcopy(active.palette), { transparent = "NONE" })
 end
 function M.gradient_colors()
-  if active and active.theme ~= "catppuccin" then
+  -- Use the published roles for every family, including customized Catppuccin.
+  if active then
     local r = active.roles
     return { r.info, r.hint, r.warning, r.error, r.accent }
   end
-  local ok, palette = pcall(function()
-    return require("catppuccin.palettes").get_palette()
-  end)
-  if not ok then
-    return { "#89b4fa", "#94e2d5", "#a6e3a1", "#f9e2af", "#cba6f7" }
-  end
+  -- Standalone configurations follow the current colorscheme without loading a
+  -- theme plugin just to obtain its palette.
   local colors = {}
-  for _, name in ipairs({ "sapphire", "sky", "teal", "green", "yellow", "peach", "maroon", "pink", "mauve", "blue" }) do
-    colors[#colors + 1] = palette[name]
+  for _, name in ipairs({
+    "DiagnosticInfo",
+    "DiagnosticHint",
+    "DiagnosticWarn",
+    "DiagnosticError",
+    "SnacksDashboardHeader",
+  }) do
+    local fg = vim.api.nvim_get_hl(0, { name = name, link = false }).fg
+    if fg then
+      colors[#colors + 1] = string.format("#%06x", fg)
+    end
+  end
+  if #colors == 0 then
+    local fg = vim.api.nvim_get_hl(0, { name = "Normal", link = false }).fg
+    colors[1] = string.format("#%06x", fg or (vim.o.background == "light" and 0x000000 or 0xffffff))
   end
   return colors
 end
