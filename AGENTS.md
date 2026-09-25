@@ -60,8 +60,10 @@ do not force-add it incidentally.
 ## Dots Integration
 
 When nested at Dots `config/nvim`, maintain `.dots/files.json` as this repository's
-resource catalog. The shared theme reader consumes validated JSON via the stable
+resource catalog. The local Anodize.nvim plugin (ANODIZE_NVIM_DIR or ~/repos/Anodize.nvim) owns shared theme reading and reload events. Its separate repository must not be changed as part of a Dots bridge edit. The reader consumes validated JSON via the stable
 XDG state `dots/current/theme` link, with legacy fallback. Keep generic imported
 themes data-only; do not execute downloaded Lua. Use the parent's isolated
-`tools/test_themes.py` and `tools/test_theme_workflow.py` for bridge changes rather
+`tools/test_anodize_nvim.py`, `tools/test_themes.py` and `tools/test_theme_workflow.py` for bridge changes rather
 than launching live LazyVim or installing plugins as a test.
+
+Keep the dashboard animation source unchanged for palette integration; update the bridge. Keep personal highlights in config/highlights/anodize.lua, and use only public Anodize APIs. Preserve the legacy raw helpers without reactivating the old native adapter lifecycle.

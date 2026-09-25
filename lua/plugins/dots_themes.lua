@@ -1,4 +1,5 @@
--- Load only the selected family. Lazy installs declared dependencies normally.
+-- Optional native schemes remain available for manual selection.
+-- Shared Dots palettes are rendered by the local Anodize.nvim plugin.
 return {
   { "folke/tokyonight.nvim", lazy = true, opts = { transparent = true, terminal_colors = false } },
   {

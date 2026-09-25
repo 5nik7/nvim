@@ -42,7 +42,7 @@ return {
 
       local opts = {
         options = {
-          theme = "auto",
+          theme = "anodize",
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
           globalstatus = vim.o.laststatus == 3,

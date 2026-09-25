@@ -73,3 +73,26 @@ clipboard interoperability, terminal behavior, visible UI, and the language
 integrations you actually use. Re-run a fresh bootstrap and parser installation on
 a network that permits the required downloads. Markdown preview's npm build and
 native debugger execution also remain unverified by the seeded run.
+
+## Anodize integration (2026-09-25)
+
+Native Termux isolated validation through the Dots parent: five focused editor
+integration cases, 23 shared-theme tests and 11 workflow tests passed without
+skips. The editor consumes actual fixture publications for all 17 native
+family/flavor combinations, a generic theme and an Anodize-authored theme.
+No native family plugin is loaded by the bridge.
+
+Checks cover explicit early loading with a copied real Lazy loader, active-only
+reload and manual selection, last-good colors, raw legacy helpers, fallback,
+Mocha exceptions, transparent main windows, opaque floats, terminal-color opt-out,
+15% inactive foreground dimming, lualine layout/update behavior, dashboard repaint
+without phase reset, visibility pause/resume, opt-out and cleanup. The animation
+source is byte-identical to the pre-integration version. Tests use disposable
+HOME/XDG/runtime and copied public sources; the normal LazyVim configuration was
+not launched and nothing was installed or activated in a live editor.
+
+Visual verification of third-party UI surfaces and a normal interactive startup
+remain owner checks. Anodize renders syntax consistently across families; it does
+not promise exact native-plugin syntax highlighting.
+
+The parent's five-sample minimal-editor benchmark measured median 65.59 ms for Anodize standalone and 75.65 ms with the shared Dots startup bridge. These include process startup and configured highlights, not the full LazyVim plugin set; ordinary device-load variation applies.

@@ -277,42 +277,49 @@ and the following results:
 
 Actual validation results for this change are recorded in [docs/validation.md](docs/validation.md).
 
-## Shared dots theme
+## Shared Dots themes through Anodize
 
-When this configuration is used with the dots theme commands, `dots themes set
-THEME FLAVOR` selects a shared palette for Zsh and Neovim. Families include Catppuccin
-(mocha/macchiato/frappe/latte), TokyoNight (night/storm/moon/day), Rosé Pine
-(main/moon/dawn), Kanagawa (wave/dragon/lotus), Gruvbox (dark/light), and pywal16
-(current). Use family identifiers `catppuccin`, `tokyonight`, `rose-pine`, `kanagawa`,
-`gruvbox`, or `pywal16`; omitted flavor uses that family's default. Install new
-plugin declarations through `:Lazy` if needed, then use `:DotsThemeReload`.
-Neovim reads generated JSON from `${XDG_STATE_HOME:-$HOME/.local/state}/dots/themes`
-at startup and when focus returns; it never launches dots to obtain colors.
-Use `:DotsThemeReload` when the terminal does not send focus events. Without shared
-state, the existing Mocha configuration remains the default.
+The local Anodize.nvim colorscheme reads validated published JSON from
+`${XDG_STATE_HOME:-$HOME/.local/state}/dots/current/theme/palette.json`, with legacy
+state fallback. The separate plugin checkout defaults to `~/repos/Anodize.nvim`;
+set `ANODIZE_NVIM_DIR` before starting Neovim to use another local path. This is a
+local Lazy specification, not a remote plugin installation. If it is absent, the
+bridge reports the path and selects Neovim's bundled `habamax` fallback.
 
-Mocha retains the existing custom highlights. Other Catppuccin flavors adapt the selected
-line, visual selection, comment, line-number, and dashboard icon colors to their
-own palette. Other families use their native plugins with shared palette overrides;
-all families drive dashboard colors while preserving its animation settings. Pywal16
-uses validated published JSON through `dots-pywal16`, never a live Vimscript export.
-Regenerate your wal palette and run `dots themes set pywal16` to publish changes.
-Invalid shared data or unavailable plugins retain the current colors with a warning.
-The reader does not install plugins or overwrite configuration files; new plugins
-are lazy-loaded by the normal plugin manager when selected.
+On the next normal start, the LazyVim colorscheme callback explicitly loads the
+configured local plugin and selects `anodize`. It supports all published native
+families, Pywal16, generic imported themes and themes authored by the Anodize CLI.
+No CLI subprocess or downloaded theme code is needed by the reader. Without valid
+published data it uses the plugin's bundled fallback; a failed reload retains the
+last working palette.
 
-## Shared Dots themes and file catalog
+The plugin watches the published state and handles focus/resume events. Use
+`:DotsThemeReload` (compatibility alias), `:AnodizeReload`, or `:AnodizeStatus`.
+Reloads apply only while Anodize is active. After manually selecting another
+colorscheme, return explicitly with `:colorscheme anodize`; focus will not override
+your selection. Optional native schemes remain declared for manual use.
 
-When used through Dots at `config/nvim`, `.dots/files.json` owns this repository's
-resource metadata independently of the parent and Androidots. The theme bridge
-reads `~/.local/state/dots/current/theme/palette.json` (XDG_STATE_HOME respected),
-with legacy token fallback. `dots theme set ID` selects a published snapshot;
-focus or `:DotsThemeReload` applies it. Native theme plugins retain syntax options
-and transparency, with shared foreground/selection/accent roles. Other imported
-themes use built-in generic highlights; downloaded Lua is never executed. No
-plugins are installed by the bridge.
+Dots owns personal highlights in `lua/config/highlights/anodize.lua`: transparent
+main windows, opaque floating surfaces, no terminal color assignments, 15% dimmer
+inactive foregrounds, diagnostic/dashboard/picker formatting, and intentional Mocha
+selected-line/comment/line-number exceptions. Other colors derive from normalized
+semantic data. Native syntax rendering is replaced by Anodize's renderer, so it is
+not a byte-for-byte reproduction of every native colorscheme. Lualine uses Anodize's
+palette-backed theme while retaining the existing layout and mode labels.
 
-The animated dashboard header cycles through the published theme's info, hint,
-warning, error, and accent colors for every family, including Catppuccin. It refreshes
-when the shared theme is applied. Without shared state, the gradient uses the current
-Neovim diagnostic and dashboard highlight colors.
+The dashboard animation is unchanged. Its bridge reads info, hint, warning, error
+and accent roles; inactive Anodize falls back to current diagnostic/dashboard
+highlights. Repainting preserves animation phase, direction and timing. Legacy
+`options(opts)` and `pywal_colors()` remain data-only compatibility helpers backed
+by a separate bounded raw reader; they do not activate native schemes.
+
+When nested in Dots, `.dots/files.json` remains this repository's independent
+resource catalog. Configuration changes belong to this Git repository; the
+separate Anodize.nvim source and the Dots parent retain their own histories.
+
+From the Dots parent, run `python3 -B tools/test_anodize_nvim.py`,
+`python3 -B tools/test_themes.py`, and `python3 -B tools/test_theme_workflow.py`.
+The tests copy public source and use disposable HOME/XDG/runtime/config roots;
+they do not launch the normal LazyVim configuration. Build the Dots Anodize engine
+first to exercise authored-theme publication. See [validation](docs/validation.md)
+for coverage and remaining interactive checks.
