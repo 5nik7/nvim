@@ -11,7 +11,8 @@ local original = {
 }
 local available, windows, wsl = {}, false, false
 vim.env.TERMUX_VERSION, vim.env.PREFIX, vim.env.CC = nil, nil, nil
-vim.fn.has = function(name)
+-- Install partial test doubles without redefining the upstream API types.
+rawset(vim.fn, "has", function(name)
   if name == "win32" then
     return windows and 1 or 0
   end
@@ -19,19 +20,19 @@ vim.fn.has = function(name)
     return wsl and 1 or 0
   end
   return original.has(name)
-end
-vim.fn.executable = function(cmd)
+end)
+rawset(vim.fn, "executable", function(cmd)
   return available[cmd] and 1 or 0
-end
-vim.fn.exepath = function(cmd)
+end)
+rawset(vim.fn, "exepath", function(cmd)
   return available[cmd] and ("/tools with spaces/" .. cmd) or ""
-end
-vim.fn.resolve = function(path)
+end)
+rawset(vim.fn, "resolve", function(path)
   return path
-end
-vim.uv.os_uname = function()
+end)
+rawset(vim.uv, "os_uname", function()
   return { sysname = windows and "Windows_NT" or "Linux" }
-end
+end)
 
 local count = 0
 local function check(value, message)
@@ -65,11 +66,12 @@ available.pwsh = true
 check(platform.shell() == "pwsh", "PowerShell Core preference")
 windows = false
 
-_G.LazyVim = { terminal = {
+local lazyvim = { terminal = {
   setup = function()
     error("Unix shell must not be changed")
   end,
 } }
+rawset(_G, "LazyVim", lazyvim)
 vim.g.clipboard = { name = "custom" }
 dofile("lua/config/options.lua")
 check(vim.g.clipboard.name == "custom", "explicit clipboard survives options")
@@ -78,7 +80,7 @@ dofile("lua/config/options.lua")
 check(vim.g.clipboard == false, "explicit default-provider setting preserved")
 windows = true
 available.pwsh = nil
-LazyVim.terminal.setup = function()
+lazyvim.terminal.setup = function()
   vim.o.shellcmdflag = "-Command $PSStyle.OutputRendering='plaintext';Write-Output"
 end
 dofile("lua/config/options.lua")
@@ -127,7 +129,7 @@ package.loaded.lint = { linters = { example = { cmd = "linter" } } }
 opts = {
   linters_by_ft = { lua = { "example" } },
   linters = { example = {
-    condition = function()
+    condition = function(_)
       return project_config
     end,
   } },
@@ -144,7 +146,9 @@ package.preload["catppuccin.palettes"] = function()
   error("eager palette import")
 end
 check(type(dofile("lua/plugins/catppuccin.lua")) == "table", "theme discovery before installation")
-local dashboard = dofile("lua/plugins/dashboard.lua")[1].opts.dashboard.formats.file
+---@type snacks.Config
+local dashboard_opts = dofile("lua/plugins/dashboard.lua")[1].opts
+local dashboard = dashboard_opts.dashboard.formats.file
 local parts = dashboard({ file = [[C:\Users\Test User\project\main.lua]] }, { width = 120 })
 check(parts[#parts][1] == "main.lua", "Windows dashboard filename")
 
@@ -170,24 +174,20 @@ check(
 vim.env.TERMUX_VERSION = nil
 windows = true
 local stat = vim.uv.fs_stat
-local library_path
+local library_exists = true
 available.codelldb = true
-vim.uv.fs_stat = function(path)
-  library_path = path
-  return { type = "file" }
-end
+rawset(vim.uv, "fs_stat", function()
+  if library_exists then
+    return { type = "file" }
+  end
+end)
 local adapter, library = tools.codelldb()
-check(adapter ~= nil and library:match("/bin/liblldb%.dll$") ~= nil, "Windows CodeLLDB DLL layout")
-vim.uv.fs_stat = function()
-  return nil
-end
+check(adapter ~= nil and library ~= nil and library:match("/bin/liblldb%.dll$") ~= nil, "Windows CodeLLDB DLL layout")
+library_exists = false
 check(tools.codelldb() == nil, "incomplete CodeLLDB installation skipped")
 windows = false
-vim.uv.fs_stat = function(path)
-  library_path = path
-  return { type = "file" }
-end
+library_exists = true
 adapter, library = tools.codelldb()
-check(adapter ~= nil and library:match("/lib/liblldb%.so$") ~= nil, "Linux CodeLLDB library layout")
-vim.uv.fs_stat = stat
+check(adapter ~= nil and library ~= nil and library:match("/lib/liblldb%.so$") ~= nil, "Linux CodeLLDB library layout")
+rawset(vim.uv, "fs_stat", stat)
 print("PASS: " .. count .. " portability assertions")
