@@ -129,7 +129,7 @@ local function checked_selection()
   if not reported then
     reported = true
     vim.schedule(function()
-      vim.notify("dots themes: cannot read shared theme; keeping current colors", vim.log.levels.WARN)
+      vim.notify("dots theme: cannot read shared theme; keeping current colors", vim.log.levels.WARN)
     end)
   end
 end

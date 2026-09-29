@@ -32,7 +32,7 @@ function M.install()
   vim.api.nvim_create_user_command("DotsThemeReload", function()
     local ok, reason = M.reload(true)
     if not ok and reason == "inactive" then
-      vim.notify("dots themes: use :colorscheme anodize to activate", vim.log.levels.INFO)
+      vim.notify("dots theme: use :colorscheme anodize to activate", vim.log.levels.INFO)
     elseif not ok and reason == "Anodize.nvim unavailable" then
       vim.notify(reason .. "; check ANODIZE_NVIM_DIR or ~/repos/Anodize.nvim", vim.log.levels.WARN)
     end
@@ -68,7 +68,7 @@ end
 
 function M.pywal_colors()
   local selected = require("util.dots_theme_legacy").read()
-  assert(selected and selected.data.theme == "pywal16", "Select pywal16 through dots themes first")
+  assert(selected and selected.data.theme == "pywal16", "Select pywal16-current through dots theme first")
   return vim.tbl_extend("force", vim.deepcopy(selected.data.palette), { transparent = "NONE" })
 end
 
