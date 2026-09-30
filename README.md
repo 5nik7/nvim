@@ -205,6 +205,34 @@ from disk and does not automatically send unsaved buffers or visual selections.
 Use `:checktime` to refresh files changed by Codex (modified buffers are protected
 by Neovim's normal reload checks), then review the changes with Git.
 
+## Pi inside Neovim
+
+[pi.nvim](https://github.com/pablopunk/pi.nvim) provides an asynchronous prompt
+interface alongside the existing Codex terminal. Lazy installs it on the next
+normal startup and loads it only when a Pi command or shortcut is used.
+The `pi` executable must be on Neovim's PATH and already authenticated; run Pi in
+your regular terminal to configure it first. No credentials or model are stored
+in this Neovim config: the plugin uses Pi's configured provider/model, enables
+skills and extensions, and defaults to thinking off. Override plugin options in
+`lua/plugins/pi.lua` if needed.
+
+| Command | Shortcut | Action |
+| --- | --- | --- |
+| `:PiAsk` | `<Space>ap` (normal) | Ask with current buffer context |
+| `:'<,'>PiAskSelection` | `<Space>ap` (visual) | Ask with selected lines and surrounding context |
+| `:PiCancel` | `<Space>ax` (normal) | Cancel the active request |
+| `:PiLog` | `<Space>al` (normal) | Open the session log |
+
+This is a prompt interface, not an embedded Pi terminal or a persistent Pi chat.
+It runs in Neovim's current working directory; use `:pwd` to check the project
+before asking. Buffer/selection context is sent to your configured AI provider,
+and Pi can edit files and run tools. Do not send sensitive buffers unintentionally.
+
+**Save all buffers before asking and avoid editing while Pi runs.** Upstream
+currently force-reloads loaded files changed on disk after a successful request,
+which can discard unsaved edits. Cancellation does not undo changes already made;
+review changes with Git. Context is size-limited and may be trimmed.
+
 ## Diagnostics and updates
 
 LuaLS suppresses `undefined-doc-name` warnings for this config through `.luarc.json`.

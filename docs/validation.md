@@ -33,6 +33,18 @@ It checks Noice's captured error messages as well as process output. This is not
 visual UI test. The final run injected unavailable parser-build capability to avoid
 blocked downloads; existing native parser binaries were copied and actually loaded.
 
+## Pi plugin integration
+
+On native Termux with Neovim 0.12.5, `stylua --check lua/plugins/pi.lua` and
+`git diff --check` passed. A disposable clone of `pablopunk/pi.nvim` at
+`fab2a7932a5478e522d609a9fd39a7aac6c0440d` loaded successfully under
+`nvim --headless -u NONE -i NONE` with isolated HOME and XDG roots.
+The focused check verified setup, all four upstream commands, selection-range
+forwarding, unique mappings, and no overlap with the configured Codex shortcuts.
+Command handlers were stubbed: no AI requests, credentials, or live config startup
+were involved. This does not establish interactive prompting, authenticated RPC,
+full LazyVim loading, or native Windows/WSL/Linux operation.
+
 ## Reproduce the successful run
 
 ```sh
