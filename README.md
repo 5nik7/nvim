@@ -182,23 +182,49 @@ Snacks floating terminal. It uses the existing Snacks plugin and your Codex logi
 model, and permission settings.
 
 - **Termux:** uses [5nik7/codex-termux](https://github.com/5nik7/codex-termux),
-  invoking `codex-termux run` or `codex-termux run resume`. The wrapper must be on
-  Neovim's PATH; there is no fallback to the plain `codex` executable. Sign in with
+  invoking `codex-termux --wrapper-no-update chatgpt --no-daemon` by default.
+  Foreground resume commands append `resume` or `resume --last`. All Termux
+  shortcuts disable wrapper update checks. The wrapper must be on Neovim's
+  PATH; there is no fallback to the plain `codex` executable. Sign in with
   `codex-termux login` in your regular terminal if needed. The wrapper's runtime
   selection, proxy, and configuration apply normally.
-- **Other platforms:** uses `codex` or `codex resume` from PATH. Sign in with
-  `codex login` if needed.
+- **Other platforms:** uses `codex`, `codex resume`, or `codex resume --last`
+  from PATH. Sign in with `codex login` if needed. Server-connect commands
+  display a Termux-only notification.
 
 | Command | Normal-mode shortcut | Action |
 | --- | --- | --- |
 | `:Codex` | `<Space>ac` | Toggle Codex in LazyVim's detected project root |
 | `:CodexResume` | `<Space>ar` | Open the project's saved-session picker, or toggle its running terminal |
+| `:CodexResumeLast` | `<Space>aR` | Resume the project's latest session, or toggle its running terminal |
+| `:CodexConnect` | `<Space>aC` | Connect to the configured server (Termux), or toggle its running terminal |
+| `:CodexConnectResumeLast` | `<Space>aL` | Connect and resume the project's latest session (Termux), or toggle its running terminal |
+
+The connect shortcuts run `codex-termux --wrapper-no-update connect --chatgpt`
+and `codex-termux --wrapper-no-update connect --chatgpt resume --last`.
+They require an already running server and use the wrapper's configured managed
+or runit backend. They do not start a server or fall back to foreground mode on
+failure. `--no-daemon` applies only to foreground launches; it is incompatible
+with `connect`.
 
 Type directly into the terminal to talk to Codex. To return to Neovim, press
 `Ctrl-\` then `Ctrl-n`; press `q` in terminal normal mode to hide the window.
 Opening it again keeps the running conversation. Escape passes through to Codex.
-The normal and resume commands use separate terminals, each retained per project
+Each command uses a separate terminal, retained per project
 until its process exits or Neovim closes. Use Codex's `/quit` to end a session.
+
+Codex terminals answer foreground/background color queries using the active
+Anodize palette, instead of Neovim's default black/white replies. Other
+colorschemes use explicit window highlights when available; unresolved colors
+and unrelated terminals retain Neovim's normal handling. If Neovim's default
+handler cannot be identified, the integration warns once and leaves it intact.
+The handler reads current colors for each query, but Codex may cache them:
+restart its session after changing themes if its colors remain stale.
+
+Stock Codex still chooses the input box's shading. This correction does not force
+the input background to the theme's `dark_background`; Codex's `/theme` setting
+controls syntax highlighting rather than that surface. Editor transparency and
+the global terminal palette remain unchanged.
 
 Save buffers before asking Codex to work on them: this integration reads files
 from disk and does not automatically send unsaved buffers or visual selections.
@@ -210,11 +236,16 @@ by Neovim's normal reload checks), then review the changes with Git.
 [pi.nvim](https://github.com/pablopunk/pi.nvim) provides an asynchronous prompt
 interface alongside the existing Codex terminal. Lazy installs it on the next
 normal startup and loads it only when a Pi command or shortcut is used.
-The `pi` executable must be on Neovim's PATH and already authenticated; run Pi in
-your regular terminal to configure it first. No credentials or model are stored
-in this Neovim config: the plugin uses Pi's configured provider/model, enables
-skills and extensions, and defaults to thinking off. Override plugin options in
-`lua/plugins/pi.lua` if needed.
+The configured launcher is `~/.local/bin/pi` and must already be authenticated;
+run Pi in your regular terminal to configure it first. No credentials or model
+are stored in this Neovim config: the plugin uses Pi's configured provider/model,
+enables skills and extensions, and uses medium thinking. Override plugin options
+in `lua/plugins/pi.lua` if needed.
+
+Extensions load for each request and can delay startup. A local Termux check
+measured about 27 seconds with the installed extensions, versus about two seconds
+without them. Extensions remain enabled, including the safety guard. The prompt
+interface does not handle interactive extension dialogs.
 
 | Command | Shortcut | Action |
 | --- | --- | --- |
@@ -222,6 +253,10 @@ skills and extensions, and defaults to thinking off. Override plugin options in
 | `:'<,'>PiAskSelection` | `<Space>ap` (visual) | Ask with selected lines and surrounding context |
 | `:PiCancel` | `<Space>ax` (normal) | Cancel the active request |
 | `:PiLog` | `<Space>al` (normal) | Open the session log |
+
+Session logs are written to `stdpath("state") .. "/pi/session.log"` (normally
+`~/.local/state/nvim/pi/session.log` on Termux), avoiding the unwritable `/tmp`
+directory. `:PiLog` opens that same file; it may not exist before a request finishes.
 
 This is a prompt interface, not an embedded Pi terminal or a persistent Pi chat.
 It runs in Neovim's current working directory; use `:pwd` to check the project
@@ -261,8 +296,12 @@ From this repository:
 ```sh
 stylua --check init.lua lua/ tests/
 nvim --headless -u NONE -i NONE -l tests/portability.lua
+nvim --headless -u NONE -i NONE -l tests/codex_colors.lua
 python scripts/check.py
 ```
+
+The Codex color check uses Python PTY probes and simulated launchers; it does not
+start Codex, contact a provider, or load your live LazyVim configuration.
 
 The Python runner copies this config into temporary directories, isolates all four
 XDG locations, and uses a sample project whose path contains spaces. It checks fresh
