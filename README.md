@@ -390,3 +390,5 @@ The tests copy public source and use disposable HOME/XDG/runtime/config roots;
 they do not launch the normal LazyVim configuration. Build the Dots Anodize engine
 first to exercise authored-theme publication. See [validation](docs/validation.md)
 for coverage and remaining interactive checks.
+
+The Dots catalog supplies a Windows-specific `${NVIM_CONFIG}/nvim` target, honoring XDG_CONFIG_HOME before LOCALAPPDATA. The parent checkout's explicit installer owns linking, backups and restore; ordinary Neovim startup does not install its config.
