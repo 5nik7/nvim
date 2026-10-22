@@ -6,7 +6,7 @@ return {
     ---@type snacks.Config
     opts = {
       dashboard = {
-        width = 28,
+        width = 27,
         rows = nil,
         col = nil,
         pane_gap = 0,

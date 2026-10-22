@@ -20,6 +20,11 @@ return function(colors)
   return {
     -- Editor
     Visual = { bg = accents.visual },
+    BufferLineFill = { bg = colors.mantle },
+    BufferLineBackground = { bg = colors.mantle },
+    BufferLineGroupSeparator = { bg = colors.mantle },
+    BufferLineOffsetSeparator = { bg = colors.mantle },
+    BufferLineTruncMarker = { bg = colors.mantle },
     Comment = { fg = macchiato.surface2 },
     NonText = { fg = colors.surface1 },
     LineNr = { fg = macchiato.surface1, bg = colors.mantle, bold = false },
