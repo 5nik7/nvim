@@ -6,13 +6,13 @@ return {
     ---@type snacks.Config
     opts = {
       dashboard = {
-        width = 27,
+        width = 23,
         rows = nil,
         col = nil,
         pane_gap = 0,
         autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
         preset = {
-          header = ui.banners.neovim.tube,
+          header = ui.banners.neovim.chrome,
         },
         formats = {
           file = ui.format_dashboard_file,
