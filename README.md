@@ -374,6 +374,8 @@ semantic data. Native syntax rendering is replaced by Anodize's renderer, so it 
 not a byte-for-byte reproduction of every native colorscheme. Lualine uses Anodize's
 palette-backed theme while retaining the existing layout and mode labels.
 
+The bufferline row, matching separators, and inactive tabs (including buffers visible in other windows) use Anodize's `dark_background`. Selected-tab backgrounds and text/diagnostic styling retain bufferline's defaults. These preferences follow theme reloads and apply only while Anodize is active. The personal `SnacksBackdrop` highlight also uses `dark_background`; Snacks versions that generate their own backdrop groups control those separately.
+
 The dashboard animation is unchanged. Its bridge reads info, hint, warning, error
 and accent roles; inactive Anodize falls back to current diagnostic/dashboard
 highlights. Repainting preserves animation phase, direction and timing. Legacy

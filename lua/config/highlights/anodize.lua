@@ -63,6 +63,7 @@ function M.configure(h, c)
     FloatBorder = { fg = c.muted, bg = c.background },
     FloatTitle = { fg = c.accent, bg = c.background },
     NotifyBackground = { bg = c.background },
+    SnacksBackdrop = { bg = c.dark_background },
     lualinedir = { fg = c.muted },
     SnacksDashboardNormal = { fg = c.foreground, bg = c.background },
     SnacksDashboardHeader = { fg = c.accent, bg = c.background },
@@ -91,6 +92,68 @@ function M.configure(h, c)
   end
 end
 
+-- Bufferline supplies complete defaults so changing surfaces preserves text styles.
+function M.bufferline(defaults)
+  local highlights = vim.deepcopy(defaults.highlights)
+  local anodize = package.loaded.anodize
+  local palette = anodize and anodize.get_palette()
+  if not palette then
+    return highlights
+  end
+  local background = palette.colors.dark_background
+  local function set(name, attribute)
+    if highlights[name] then
+      highlights[name][attribute] = background
+    end
+  end
+  for _, name in ipairs({
+    "fill",
+    "group_separator",
+    "offset_separator",
+    "trunc_marker",
+    "background",
+    "tab",
+    "tab_close",
+    "tab_separator",
+    "indicator_visible",
+  }) do
+    set(name, "bg")
+  end
+  for _, name in ipairs({
+    "buffer",
+    "close_button",
+    "numbers",
+    "diagnostic",
+    "hint",
+    "hint_diagnostic",
+    "info",
+    "info_diagnostic",
+    "warning",
+    "warning_diagnostic",
+    "error",
+    "error_diagnostic",
+    "modified",
+    "duplicate",
+    "pick",
+    "separator",
+  }) do
+    set(name, "bg")
+    set(name .. "_visible", "bg")
+  end
+  for _, name in ipairs({
+    "separator",
+    "separator_visible",
+    "separator_selected",
+    "tab_separator",
+    "tab_separator_selected",
+    "group_label",
+    "indicator_visible",
+  }) do
+    set(name, "fg")
+  end
+  return highlights
+end
+
 function M.after_load()
   local p = require("anodize").get_palette()
   if not p or p.metadata.theme ~= "catppuccin" or p.metadata.flavor ~= "mocha" then
@@ -101,12 +164,10 @@ function M.after_load()
     vim.api.nvim_set_hl(0, name, { bg = "#242438" })
   end
   local line = vim.api.nvim_get_hl(0, { name = "CursorLineNr", link = false })
-  line.bg = "#242438"
-  vim.api.nvim_set_hl(0, "CursorLineNr", line)
+  vim.api.nvim_set_hl(0, "CursorLineNr", vim.tbl_extend("force", line, { bg = "#242438" }))
   vim.api.nvim_set_hl(0, "Comment", { fg = "#5b6078" })
   local number = vim.api.nvim_get_hl(0, { name = "LineNr", link = false })
-  number.fg = "#494d64"
-  vim.api.nvim_set_hl(0, "LineNr", number)
+  vim.api.nvim_set_hl(0, "LineNr", vim.tbl_extend("force", number, { fg = "#494d64" }))
 end
 
 return M

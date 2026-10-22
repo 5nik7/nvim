@@ -96,7 +96,8 @@ return {
       opts.server.cmd = { platform.tool("rust-analyzer") or "rust-analyzer" }
       local adapter, library = tools.codelldb()
       opts.dap = opts.dap or {}
-      opts.dap.adapter = adapter and require("rustaceanvim.config").get_codelldb_adapter(adapter, library) or false
+      opts.dap.adapter = adapter and library and require("rustaceanvim.config").get_codelldb_adapter(adapter, library)
+        or false
       vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts)
     end,
   },

@@ -131,14 +131,15 @@ local ok, err = xpcall(function()
   rawset(vim.fn, "executable", function()
     return executable and 1 or 0
   end)
-  _G.LazyVim = {
+  -- Install partial test doubles without requiring every upstream API field.
+  rawset(_G, "LazyVim", {
     root = function()
       return "/project"
     end,
-  }
+  })
   local calls = {}
   local terminal = { buf = vim.api.nvim_get_current_buf() }
-  _G.Snacks = {
+  rawset(_G, "Snacks", {
     terminal = {
       toggle = function(cmd, opts)
         calls[#calls + 1] = { cmd = cmd, opts = opts }
@@ -147,7 +148,7 @@ local ok, err = xpcall(function()
         return terminal
       end,
     },
-  }
+  })
   local codex = require("util.codex")
   local modes = {
     { "new", {} },
@@ -177,9 +178,9 @@ local ok, err = xpcall(function()
     check(calls[#calls].cmd[1] == "codex", "non-Termux launcher changed")
   end
   local notices = {}
-  vim.notify = function(message)
+  rawset(vim, "notify", function(message)
     notices[#notices + 1] = message
-  end
+  end)
   local launched = #calls
   codex.toggle("connect")
   executable = false

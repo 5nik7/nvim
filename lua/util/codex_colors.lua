@@ -121,7 +121,7 @@ function M.install()
   return true
 end
 
----@param win snacks.win
+---@param win { buf: integer }
 function M.on_buf(win)
   M.install()
   vim.b[win.buf].codex_terminal = true
