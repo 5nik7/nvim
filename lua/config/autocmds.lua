@@ -15,3 +15,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
     end
   end,
 })
+
+vim.api.nvim_create_user_command("DotsKeys", function()
+  require("util.dots_keys").open()
+end, { desc = "Browse effective keybindings for this Neovim buffer" })

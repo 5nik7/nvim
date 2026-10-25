@@ -394,3 +394,7 @@ first to exercise authored-theme publication. See [validation](docs/validation.m
 for coverage and remaining interactive checks.
 
 The Dots catalog supplies a Windows-specific `${NVIM_CONFIG}/nvim` target, honoring XDG_CONFIG_HOME before LOCALAPPDATA. The parent checkout's explicit installer owns linking, backups and restore; ordinary Neovim startup does not install its config.
+
+## Dots keybinding reference
+
+`:DotsKeys` exports the current global/buffer mappings and opens the shared `dots keys` FZF browser. Buffer mappings take precedence, and unloaded plugins are not forced to load. Selection displays details without executing mappings. Dots must be installed on PATH; native Windows uses its PowerShell entry point. The bridge is implemented in `lua/util/dots_keys.lua`.
