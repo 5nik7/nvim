@@ -51,7 +51,7 @@ function M.toggle(mode)
       position = "float",
       width = 0.9,
       height = 0.85,
-      border = "rounded",
+      border = "single",
       title = " " .. launch.title .. " ",
       on_buf = require("util.codex_colors").on_buf,
       keys = {
