@@ -20,7 +20,7 @@ return {
     },
     config = function(_, opts)
       require("util.dots_theme").install()
-      require("anodize").setup(opts)
+      require("anodize").setup(require("util.dots_config").theme(opts))
     end,
   },
 }

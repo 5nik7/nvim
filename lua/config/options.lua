@@ -27,3 +27,5 @@ end
 if vim.g.clipboard == nil then
   vim.g.clipboard = platform.clipboard()
 end
+
+require("util.dots_config").options()

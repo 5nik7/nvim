@@ -12,6 +12,7 @@ function M.reload(_force)
   if not anodize then
     return false, "Anodize.nvim unavailable"
   end
+  require("util.dots_config").refresh()
   return anodize.reload()
 end
 
@@ -20,6 +21,7 @@ function M.install()
     return
   end
   installed = true
+  require("util.dots_config").install()
   -- Clear the old bridge's focus/resume handlers. Anodize owns these events.
   local group = vim.api.nvim_create_augroup("dots_theme", { clear = true })
   vim.api.nvim_create_autocmd("ColorScheme", {

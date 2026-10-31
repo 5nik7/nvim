@@ -13,9 +13,13 @@ return {
       end
     end,
     opts = function()
+      require("util.dots_config").lualine_builder = function()
+        return require("plugins.lualine")[1].opts()
+      end
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
+      require("util.dots_config").options()
       local icons = LazyVim.config.icons
 
       vim.o.laststatus = vim.g.lualine_laststatus
@@ -142,7 +146,7 @@ return {
         })
       end
 
-      return opts
+      return require("util.dots_config").lualine(opts)
     end,
   },
 }
