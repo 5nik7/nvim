@@ -31,6 +31,7 @@ registries. Once installed, ordinary editing does not require a fresh bootstrap.
   Hererocks. Git dependencies provide the enabled plugins' ordinary functionality.
 - The disabled Obsidian integration stays disabled. The configured palette and
   dashboard do not require pywal output to exist.
+- The Snacks dashboard matches the widest displayed line of its selected banner. Change `header` in [lua/plugins/dashboard.lua](lua/plugins/dashboard.lua) to select another banner; its width is calculated when the configuration loads.
 - The `:` command line uses Noice's full-width bottom layout on Termux. Other
   platforms use a 60-column popup and completion menu; below 64 terminal columns
   (including borders and padding), they use 80% of the terminal width. The layout

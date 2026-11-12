@@ -1,4 +1,9 @@
 local ui = require("util.ui")
+local header = ui.banners.neovim.dotlet
+local header_width = 1
+for _, line in ipairs(vim.split(header, "\n", { plain = true })) do
+  header_width = math.max(header_width, vim.fn.strdisplaywidth(line))
+end
 
 return {
   {
@@ -6,13 +11,13 @@ return {
     ---@type snacks.Config
     opts = {
       dashboard = {
-        width = 27,
+        width = header_width,
         rows = nil,
         col = nil,
         pane_gap = 0,
         autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
         preset = {
-          header = ui.banners.neovim.tube,
+          header = header,
         },
         formats = {
           file = ui.format_dashboard_file,
