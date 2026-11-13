@@ -25,6 +25,10 @@ registries. Once installed, ordinary editing does not require a fresh bootstrap.
   Existing parsers remain usable without those tools. After installing prerequisites,
   restart and run `:TSUpdate`. CLI/compiler versions must also meet the requirements
   of the resolved nvim-treesitter revision (`:checkhealth nvim-treesitter`).
+- Termux parser builds retain the native compiler's Android API target instead of
+  cc-rs's unversioned target. Tree-sitter build/generate diagnostics use plain text
+  so `:messages`, Noice and `:TSLog` do not display ANSI color escapes. These
+  environment overrides apply only to those subprocesses.
 - Completion uses Blink's native matcher when available and falls back to Lua.
   LuaSnip's optional regex extension builds only with a compiler and Make on Unix.
 - LuaRocks support uses an existing system `luarocks`; it does not bootstrap
@@ -290,6 +294,12 @@ resolve different revisions. CI retains its resolved lockfile with the logs.
 Neovim, language runtimes, Mason tools, and native Termux packages have separate
 update lifecycles. Re-run checks after updates.
 
+If a Termux parser update previously failed with `Unversioned target triples are
+not supported!` (often shown first as `Failed to compile parser` for Tera), restart
+Neovim to load the build fix, then run `:TSUpdate tera`. Use `:TSLog` to inspect the
+full compiler diagnostic if a build still fails. The fix keeps Tera enabled and
+does not pin parser revisions or suppress build failures.
+
 ## Validation
 
 From this repository:
@@ -297,12 +307,15 @@ From this repository:
 ```sh
 stylua --check init.lua lua/ tests/
 nvim --headless -u NONE -i NONE -l tests/portability.lua
+nvim --headless -u NONE -i NONE -l tests/treesitter.lua
 nvim --headless -u NONE -i NONE -l tests/codex_colors.lua
 python scripts/check.py
 ```
 
 The Codex color check uses Python PTY probes and simulated launchers; it does not
 start Codex, contact a provider, or load your live LazyVim configuration.
+The Tree-sitter check uses simulated subprocesses and platforms to verify scoped
+build environments, plain diagnostics and unchanged calls to other programs.
 
 The Python runner copies this config into temporary directories, isolates all four
 XDG locations, and uses a sample project whose path contains spaces. It checks fresh

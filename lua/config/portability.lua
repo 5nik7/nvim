@@ -27,12 +27,14 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = function()
+      require("util.treesitter").setup()
       if platform.can_build_parsers() then
         vim.env.CC = vim.env.CC or platform.compiler()
         require("nvim-treesitter").update(nil, { summary = true })
       end
     end,
     opts = function(_, opts)
+      require("util.treesitter").setup()
       if platform.can_build_parsers() then
         vim.env.CC = vim.env.CC or platform.compiler()
       else

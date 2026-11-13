@@ -108,3 +108,41 @@ remain owner checks. Anodize renders syntax consistently across families; it doe
 not promise exact native-plugin syntax highlighting.
 
 The parent's five-sample minimal-editor benchmark measured median 65.59 ms for Anodize standalone and 75.65 ms with the shared Dots startup bridge. These include process startup and configured highlights, not the full LazyVim plugin set; ordinary device-load variation applies.
+
+## Tree-sitter parser builds (2026-11-12)
+
+Implemented a scoped subprocess environment in `lua/util/treesitter.lua`, enabled
+from both the Tree-sitter options and Lazy build hooks. Native Termux reproduction
+used Neovim 0.12.6, tree-sitter 0.27.2, Clang 21.1.8, nvim-treesitter `60c0f468`
+and Tera grammar `5fff1363a3e474765ee8dfd546630c2a8a7c6cc4`.
+
+The original build failed in Android's `sys/cdefs.h` with `Unversioned target
+triples are not supported!`. Tree-sitter's
+[compiler configuration](https://github.com/tree-sitter/tree-sitter/blob/v0.27.2/crates/loader/src/loader.rs)
+uses its Rust build target, which omits the Android API level. On Termux, the helper
+asks the selected compiler for its native target with `-dumpmachine` and supplies
+that target through the build child's `CFLAGS`. It preserves compiler optimization
+and PIC defaults, appends existing user flags last, and leaves WebAssembly builds
+alone. Custom `CC` shell expressions and unrecognized/failed compiler probes pass
+through unchanged. The probe is bounded to one second and runs only during builds;
+ten native probes measured 83.27 ms median and 132.19 ms maximum, with no startup
+probe or persistent cache.
+
+Build/generate children receive plain-output environment settings before
+nvim-treesitter forwards their diagnostics to `:messages`, Noice and `:TSLog`.
+Other subprocesses and the editor's environment retain their settings.
+
+Verification used temporary HOME/XDG/config/data/state/cache roots, copied plugin
+and grammar sources, and a path containing spaces and Unicode:
+
+- The unmodified Tera grammar compiled, installed, loaded, and parsed `Hello {{ name }}!` without errors.
+- The actual Lazy build hook rebuilt an outdated Tera revision; a repeat update reported it current.
+- An injected C compiler error remained visible, with its full detail and no ANSI escapes in `:messages` or `:TSLog`, even with forced color in the parent environment.
+- `tests/treesitter.lua` passed 91 subprocess assertions; the existing portability suite passed 41 assertions. The new test is included in `scripts/check.py`.
+- Focused LuaLS checks for the helper, platform helper and new test reported no problems.
+- All Lua formatting checks, Python runner syntax, affected Markdown links and whitespace checks passed. The existing Codex terminal suite passed 85 assertions, including real PTY replies. The parent Wiki build was unchanged and its check was healthy.
+
+Native Linux, WSL, Windows, a full Lazy plugin update, and interactive Noice
+rendering were not exercised. Platform simulations verify that the Android target
+adjustment is Termux-only; they do not establish native desktop compiler behavior.
+The real editor, plugin installation and parser caches were not modified.

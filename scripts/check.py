@@ -124,6 +124,19 @@ def main():
                 repo,
             )
             run(
+                "treesitter-unit",
+                [
+                    "--headless",
+                    "-u",
+                    "NONE",
+                    "-i",
+                    "NONE",
+                    "-l",
+                    str(repo / "tests/treesitter.lua"),
+                ],
+                repo,
+            )
+            run(
                 "missing-git",
                 [
                     "--headless",
