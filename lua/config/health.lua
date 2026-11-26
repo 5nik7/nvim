@@ -86,10 +86,14 @@ function M.check()
     "codelldb",
     "kotlin-debug-adapter",
   }
+  -- No native build exists for these; their extras stay usable from WSL.
+  local unsupported = detected.windows and { fish = true } or {}
   for _, command in ipairs(commands) do
     local path = platform.tool(command)
     if path then
       health.ok(command .. ": " .. path)
+    elseif unsupported[command] then
+      health.info(command .. ": no native " .. detected.name .. " build; skipped.")
     else
       health.warn(command .. " unavailable; install only if needed for your workflow (see README).")
     end

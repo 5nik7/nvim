@@ -63,10 +63,10 @@ vim.schedule(function()
     end
     assert(config.plugins["nvim-lspconfig"]._.loaded, "LSP file events did not load")
     assert(vim.fn.exists(":LazyFormat") == 2, "automatic formatting was not initialized")
-    lazy.load({ plugins = { "conform.nvim", "blink.cmp", "LuaSnip", "nvim-treesitter", "lualine.nvim" } })
+    lazy.load({ plugins = { "conform.nvim", "blink.cmp", "nvim-treesitter", "lualine.nvim" } })
     assert(require("conform").format, "Conform did not load")
     assert(require("blink.cmp").is_visible, "completion did not load")
-    assert(require("luasnip").expandable, "snippets did not load")
+    assert(vim.snippet.expand, "native snippets unavailable")
     assert(require("nvim-treesitter").get_installed, "Tree-sitter did not load")
 
     local conform = require("conform")

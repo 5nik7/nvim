@@ -49,15 +49,6 @@ return {
     opts = { fuzzy = { implementation = "prefer_rust" } },
   },
   {
-    "L3MON4D3/LuaSnip",
-    optional = true,
-    build = not platform.detect().windows
-        and platform.has("make")
-        and platform.compiler() ~= nil
-        and "make install_jsregexp"
-      or false,
-  },
-  {
     "mfussenegger/nvim-jdtls",
     optional = true,
     cond = function()

@@ -30,7 +30,8 @@ registries. Once installed, ordinary editing does not require a fresh bootstrap.
   so `:messages`, Noice and `:TSLog` do not display ANSI color escapes. These
   environment overrides apply only to those subprocesses.
 - Completion uses Blink's native matcher when available and falls back to Lua.
-  LuaSnip's optional regex extension builds only with a compiler and Make on Unix.
+  Snippets use Neovim's native `vim.snippet` engine through Blink (no LuaSnip);
+  `snippets/*.json` files load from the config directory.
 - LuaRocks support uses an existing system `luarocks`; it does not bootstrap
   Hererocks. Git dependencies provide the enabled plugins' ordinary functionality.
 - The disabled Obsidian integration stays disabled. The configured palette and

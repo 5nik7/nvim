@@ -164,7 +164,6 @@ specs["nvim-treesitter/nvim-treesitter"].opts(nil, opts)
 check(#opts.ensure_installed == 0, "missing parser prerequisites override extra install lists")
 check(specs["mfussenegger/nvim-jdtls"].cond() == false, "Java skipped without native launcher")
 check(specs["mrcjkb/rustaceanvim"].cond() == false, "Rust skipped without analyzer")
-check(specs["L3MON4D3/LuaSnip"].build == false, "optional snippet build skipped without make")
 opts = { adapters = { ["rustaceanvim.neotest"] = {}, ["neotest-python"] = {} } }
 specs["nvim-neotest/neotest"].opts(nil, opts)
 check(
