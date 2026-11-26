@@ -72,7 +72,12 @@ return {
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
-      statuscolumn = { folds = { open = false } },
+      statuscolumn = {
+        enabled = true,
+        folds = {
+          open = false,
+        },
+      },
       words = { enabled = true },
     },
   },
