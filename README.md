@@ -51,12 +51,12 @@ Check the destination using an existing Neovim session:
 :echo stdpath('data')
 ```
 
-| Platform | Conventional config directory | Clipboard setup |
-| --- | --- | --- |
-| Linux | `~/.config/nvim` | `wl-copy`/`wl-paste` for Wayland, or `xclip`/`xsel` for X11 |
-| WSL | `~/.config/nvim` inside the distribution | Prefer `win32yank.exe` on WSL's PATH; otherwise Neovim detects a provider |
-| Termux | `~/.config/nvim` in Termux's private home | Termux:API app plus the `termux-api` package |
-| Native Windows | `%LOCALAPPDATA%\nvim` | Neovim's detected Windows clipboard provider; optional `win32yank.exe` |
+| Platform       | Conventional config directory             | Clipboard setup                                                           |
+| -------------- | ----------------------------------------- | ------------------------------------------------------------------------- |
+| Linux          | `~/.config/nvim`                          | `wl-copy`/`wl-paste` for Wayland, or `xclip`/`xsel` for X11               |
+| WSL            | `~/.config/nvim` inside the distribution  | Prefer `win32yank.exe` on WSL's PATH; otherwise Neovim detects a provider |
+| Termux         | `~/.config/nvim` in Termux's private home | Termux:API app plus the `termux-api` package                              |
+| Native Windows | `%LOCALAPPDATA%\nvim`                     | Neovim's detected Windows clipboard provider; optional `win32yank.exe`    |
 
 These paths assume default `NVIM_APPNAME` and XDG settings. Honor the actual
 `stdpath('config')` result if you override them. Keep separate plugin/data/cache
@@ -135,11 +135,11 @@ or rolling back plugin versions as well. `:echo stdpath('data')` identifies it.
 Install core tools with the platform's package manager; this repo never invokes
 `sudo`, `winget`, `apt`, or `pkg`. Package names and supported architectures vary.
 
-| Platform | Practical prerequisites |
-| --- | --- |
-| Linux / WSL | Recent Neovim, Git, curl, tar, unzip, ripgrep, fd; GCC or Clang and tree-sitter CLI for parsers. Node/npm and Python/venv for the relevant Mason packages. Some distributions name the fd executable `fdfind`; expose it as `fd` on PATH. |
-| Windows | Recent Neovim, Git, PowerShell, archive tools required by Mason, ripgrep, fd. Put a supported C compiler and tree-sitter CLI on PATH for parsers. Launch from a compiler-enabled shell if using MSVC. Install Node/npm and Python for the relevant language packages. |
-| Termux | `pkg install neovim git curl tar unzip ripgrep fd clang make tree-sitter` provides the editing/parser foundation. Install `nodejs`, `python`, and language tools only as needed. Use native packages/builds rather than desktop release archives. |
+| Platform    | Practical prerequisites                                                                                                                                                                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux / WSL | Recent Neovim, Git, curl, tar, unzip, ripgrep, fd; GCC or Clang and tree-sitter CLI for parsers. Node/npm and Python/venv for the relevant Mason packages. Some distributions name the fd executable `fdfind`; expose it as `fd` on PATH.                             |
+| Windows     | Recent Neovim, Git, PowerShell, archive tools required by Mason, ripgrep, fd. Put a supported C compiler and tree-sitter CLI on PATH for parsers. Launch from a compiler-enabled shell if using MSVC. Install Node/npm and Python for the relevant language packages. |
+| Termux      | `pkg install neovim git curl tar unzip ripgrep fd clang make tree-sitter` provides the editing/parser foundation. Install `nodejs`, `python`, and language tools only as needed. Use native packages/builds rather than desktop release archives.                     |
 
 For Android clipboard integration, install the Termux:API companion app from a
 source compatible with your Termux app and install `termux-api` inside Termux.
@@ -154,24 +154,24 @@ you use. On desktops, `:Mason` manages packages supported by its registry; on Te
 check `pkg search`, the tool's official native-build instructions, or its runtime's
 package manager. Availability in Mason does not guarantee availability on Android.
 
-| Area | Server / runtime | Formatting, linting, or optional tools |
-| --- | --- | --- |
-| Lua | `lua-language-server` | `stylua`; `luacheck` runs only with a discoverable `.luacheckrc` and the existing project-root condition |
-| Shell / Fish | `bash-language-server` with Node; `fish` | `shfmt`, `fish_indent` |
-| Python | `basedpyright-langserver`, `ruff`, Python | Ruff formatting/import actions; project test dependencies for neotest |
-| Go | `gopls`, Go | `goimports`, `gofumpt`, `golangci-lint`; project tests |
-| Rust | `rust-analyzer`, Cargo / Rust | Cargo test/clippy; optional `codelldb` |
-| Java | `jdtls`, a compatible JDK, launcher prerequisites | Optional Mason Java debug/test bundles on desktops |
-| Kotlin | `kotlin-language-server`, compatible JDK | `ktlint`; optional `kotlin-debug-adapter` |
-| TypeScript / JavaScript | `vtsls`, Node/npm, project TypeScript | Prettier; `biome` for projects configured to use it |
-| JSON / JSONC | `vscode-json-language-server`, Node | First available `prettierd`, then `prettier`; JSON alone can fall back to `jq` |
-| Markdown | `marksman` | Prettier, `markdownlint-cli2`, `markdown-toc`; Node/npm for browser preview |
-| YAML | `yaml-language-server`, Node | Prettier |
-| TOML | `taplo` | Server formatting |
-| Tailwind | `tailwindcss-language-server`, Node | Project Tailwind dependencies |
-| Zig | `zls`, compatible Zig | Zig formatting/testing |
-| Nushell | `nu` (also supplies the language server) | Nushell runtime |
-| Git / navigation | Git, `rg`, `fd` | Optional `lazygit` |
+| Area                    | Server / runtime                                  | Formatting, linting, or optional tools                                                                   |
+| ----------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Lua                     | `lua-language-server`                             | `stylua`; `luacheck` runs only with a discoverable `.luacheckrc` and the existing project-root condition |
+| Shell / Fish            | `bash-language-server` with Node; `fish`          | `shfmt`, `fish_indent`                                                                                   |
+| Python                  | `basedpyright-langserver`, `ruff`, Python         | Ruff formatting/import actions; project test dependencies for neotest                                    |
+| Go                      | `gopls`, Go                                       | `goimports`, `gofumpt`, `golangci-lint`; project tests                                                   |
+| Rust                    | `rust-analyzer`, Cargo / Rust                     | Cargo test/clippy; optional `codelldb`                                                                   |
+| Java                    | `jdtls`, a compatible JDK, launcher prerequisites | Optional Mason Java debug/test bundles on desktops                                                       |
+| Kotlin                  | `kotlin-language-server`, compatible JDK          | `ktlint`; optional `kotlin-debug-adapter`                                                                |
+| TypeScript / JavaScript | `vtsls`, Node/npm, project TypeScript             | Prettier; `biome` for projects configured to use it                                                      |
+| JSON / JSONC            | `vscode-json-language-server`, Node               | First available `prettierd`, then `prettier`; JSON alone can fall back to `jq`                           |
+| Markdown                | `marksman`                                        | Prettier, `markdownlint-cli2`, `markdown-toc`; Node/npm for browser preview                              |
+| YAML                    | `yaml-language-server`, Node                      | Prettier                                                                                                 |
+| TOML                    | `taplo`                                           | Server formatting                                                                                        |
+| Tailwind                | `tailwindcss-language-server`, Node               | Project Tailwind dependencies                                                                            |
+| Zig                     | `zls`, compatible Zig                             | Zig formatting/testing                                                                                   |
+| Nushell                 | `nu` (also supplies the language server)          | Nushell runtime                                                                                          |
+| Git / navigation        | Git, `rg`, `fd`                                   | Optional `lazygit`                                                                                       |
 
 Browser Markdown preview installs JavaScript dependencies through npm instead of a
 platform-specific bundled executable. If you add Node/npm later, restart and run
@@ -198,13 +198,13 @@ model, and permission settings.
   from PATH. Sign in with `codex login` if needed. Server-connect commands
   display a Termux-only notification.
 
-| Command | Normal-mode shortcut | Action |
-| --- | --- | --- |
-| `:Codex` | `<Space>ac` | Toggle Codex in LazyVim's detected project root |
-| `:CodexResume` | `<Space>ar` | Open the project's saved-session picker, or toggle its running terminal |
-| `:CodexResumeLast` | `<Space>aR` | Resume the project's latest session, or toggle its running terminal |
-| `:CodexConnect` | `<Space>aC` | Connect to the configured server (Termux), or toggle its running terminal |
-| `:CodexConnectResumeLast` | `<Space>aL` | Connect and resume the project's latest session (Termux), or toggle its running terminal |
+| Command                   | Normal-mode shortcut | Action                                                                                   |
+| ------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
+| `:Codex`                  | `<Space>ac`          | Toggle Codex in LazyVim's detected project root                                          |
+| `:CodexResume`            | `<Space>ar`          | Open the project's saved-session picker, or toggle its running terminal                  |
+| `:CodexResumeLast`        | `<Space>aR`          | Resume the project's latest session, or toggle its running terminal                      |
+| `:CodexConnect`           | `<Space>aC`          | Connect to the configured server (Termux), or toggle its running terminal                |
+| `:CodexConnectResumeLast` | `<Space>aL`          | Connect and resume the project's latest session (Termux), or toggle its running terminal |
 
 The connect shortcuts run `codex-termux --wrapper-no-update connect --chatgpt`
 and `codex-termux --wrapper-no-update connect --chatgpt resume --last`.
@@ -253,12 +253,12 @@ measured about 27 seconds with the installed extensions, versus about two second
 without them. Extensions remain enabled, including the safety guard. The prompt
 interface does not handle interactive extension dialogs.
 
-| Command | Shortcut | Action |
-| --- | --- | --- |
-| `:PiAsk` | `<Space>ap` (normal) | Ask with current buffer context |
+| Command                | Shortcut             | Action                                          |
+| ---------------------- | -------------------- | ----------------------------------------------- |
+| `:PiAsk`               | `<Space>ap` (normal) | Ask with current buffer context                 |
 | `:'<,'>PiAskSelection` | `<Space>ap` (visual) | Ask with selected lines and surrounding context |
-| `:PiCancel` | `<Space>ax` (normal) | Cancel the active request |
-| `:PiLog` | `<Space>al` (normal) | Open the session log |
+| `:PiCancel`            | `<Space>ax` (normal) | Cancel the active request                       |
+| `:PiLog`               | `<Space>al` (normal) | Open the session log                            |
 
 Session logs are written to `stdpath("state") .. "/pi/session.log"` (normally
 `~/.local/state/nvim/pi/session.log` on Termux), avoiding the unwritable `/tmp`

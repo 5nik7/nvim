@@ -17,7 +17,7 @@ vim.g.shfmt_opt = "-ci"
 
 -- No plugin here uses the Perl or Ruby remote-plugin hosts; skip probing them.
 vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
+-- vim.g.loaded_ruby_provider = 0
 
 local platform = require("util.platform")
 local shell = platform.shell()
